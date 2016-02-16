@@ -43,6 +43,9 @@
     <Compile Include="Server.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\PropertiesConfig.cs" />
+    <Compile Include="Network\Packet.cs" />
+    <Compile Include="Network\PacketID.cs" />
+    <Compile Include="Network\PacketListener.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

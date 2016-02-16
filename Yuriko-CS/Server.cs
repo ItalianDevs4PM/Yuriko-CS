@@ -25,11 +25,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace YurikoCS {
 	class Server {
 
+		//Client Protocol Constants
+		public const byte[] OFFLINE_MESSAGE_DATA_ID = {0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78};
+		public const string MCPE_VERSION = "0.14.0.b8";
+		public const byte PROTOCOL_ID = 0x60;
+
 		private static Server instance;
+
+		private static string motd;
 
 		public Server(){
 			if(instance == null){
@@ -50,6 +58,7 @@ namespace YurikoCS {
 				if(!serverprop.exists("motd")){
 					serverprop.set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
 				}
+				motd = serverprop.getString("motd");
 				if(!serverprop.exists("spawn-protection")){
 					serverprop.set("spawn-protection", 10);
 				}
@@ -101,8 +110,18 @@ namespace YurikoCS {
 			}
 		}
 
+		public string getMotd(){
+			return motd;
+		}
+
 		public static Server getInstance(){
 			return instance;
+		}
+
+		public void sendPacket(IPAddress ipaddress){
+		}
+
+		public void sendPacket(string ipaddress){
 		}
 	}
 }
