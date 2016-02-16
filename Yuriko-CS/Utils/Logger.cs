@@ -35,37 +35,37 @@ namespace YurikoCS {
 		public static void info(String message){
 			Console.ForegroundColor = ConsoleColor.Gray;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.Hour + ":" + time.Minute + ":" + time.Second + "] INFO: " + message);
+			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] INFO: " + message);
 		}
 
 		public static void notice(String message){
 			Console.ForegroundColor = ConsoleColor.Cyan;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.Hour + ":" + time.Minute + ":" + time.Second + "] NOTICE: " + message);
+			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] NOTICE: " + message);
 		}
 
 		public static void warning(String message){
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.Hour + ":" + time.Minute + ":" + time.Second + "] WARNING: " + message);
+			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] WARNING: " + message);
 		}
 
 		public static void error(String message){
 			Console.ForegroundColor = ConsoleColor.Red;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.Hour + ":" + time.Minute + ":" + time.Second + "] ERROR: " + message);
+			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] ERROR: " + message);
 		}
 
 		public static void critical(String message){
 			Console.ForegroundColor = ConsoleColor.DarkRed;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.Hour + ":" + time.Minute + ":" + time.Second + "] CRITICAL: " + message);
+			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] CRITICAL: " + message);
 		}
 
 		public static void debug(String message){
 			Console.ForegroundColor = ConsoleColor.Magenta;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.Hour + ":" + time.Minute + ":" + time.Second + "] DEBUG: " + message);
+			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] DEBUG: " + message);
 		}
 	}
 }
