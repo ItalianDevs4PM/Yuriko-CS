@@ -29,7 +29,29 @@ namespace YurikoCS {
 	public class Logger {
 
 		public static void log(LogLevel level, String message){
-
+			switch(level){
+			case LogLevel.Info:
+				info(message);
+				break;
+			case LogLevel.Notice:
+				notice(message);
+				break;
+			case LogLevel.Warning:
+				warning(message);
+				break;
+			case LogLevel.Error:
+				error(message);
+				break;
+			case LogLevel.Critical:
+				critical(message);
+				break;
+			case LogLevel.Debug:
+				debug(message);
+				break;
+			default:
+				info(message);
+				break;
+			}
 		}
 
 		public static void info(String message){
