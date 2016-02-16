@@ -27,6 +27,12 @@ using System;
 
 namespace YurikoCS {
 	public enum LogLevel {
-	}
+		Info,
+		Notice,
+		Warning,
+		Error,
+		Critical,
+		Debug
+	};
 }
 
