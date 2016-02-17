@@ -25,23 +25,37 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 
 namespace YurikoCS {
 	class Server {
 
 		//Client Protocol Constants
-		public const byte[] OFFLINE_MESSAGE_DATA_ID = {0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78};
-		public const string MCPE_VERSION = "0.14.0.b8";
-		public const byte PROTOCOL_ID = 0x60;
+		public static readonly byte[] OFFLINE_MESSAGE_DATA_ID = new byte[]{0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78};
+		public const string MCPE_VERSION = "0.14.0.7";
+		public const byte MCPE_PROTOCOL_ID = 0x45;
 
 		private static Server instance;
-
+		private static Config cfg;
 		private static string motd;
+		private static int maxplayers;
 
 		public Server(){
 			if(instance == null){
 				instance = this;
+				new Logger();
+				String cwd = Directory.GetCurrentDirectory();
+				Logger.getLogger().notice("Starting Yuriko-CS v1.0");
+				if(!Directory.Exists(cwd + "/players")){
+					Directory.CreateDirectory(cwd + "/players");
+				}
+				if(!Directory.Exists(cwd + "/plugins")){
+					Directory.CreateDirectory(cwd + "/plugins");
+				}
+				if(!Directory.Exists(cwd + "/worlds")){
+					Directory.CreateDirectory(cwd + "/worlds");
+				}
 				Config serverprop = new PropertiesConfig("server.properties");
 				if(!serverprop.exists("server-name")){
 					serverprop.set("server-name", "Yuriko-CS Server");
@@ -55,10 +69,11 @@ namespace YurikoCS {
 				if(!serverprop.exists("max-players")){
 					serverprop.set("max-players", 20);
 				}
+				maxplayers = serverprop.getInt("max-players");
 				if(!serverprop.exists("motd")){
 					serverprop.set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
 				}
-				motd = serverprop.getString("motd");
+				motd = TextFormat.translateColors('&', serverprop.getString("motd"));
 				if(!serverprop.exists("spawn-protection")){
 					serverprop.set("spawn-protection", 10);
 				}
@@ -105,13 +120,19 @@ namespace YurikoCS {
 					serverprop.set("rcon-password", "random");
 				}
 				serverprop.save("server.properties");
+				cfg = serverprop;
+				new PacketListener(19132);
 			}else{
-				Logger.critical("Server already initialized!");
+				Logger.getLogger().critical("Server already initialized!");
 			}
 		}
 
 		public string getMotd(){
 			return motd;
+		}
+
+		public int getMaxPlayers(){
+			return maxplayers;
 		}
 
 		public static Server getInstance(){

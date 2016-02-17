@@ -24,30 +24,27 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
+using System.IO;
 
 namespace YurikoCS {
-	class PacketListener {
-		public static UdpClient server;
+	public class PacketString {
 
-		public PacketListener(int port){
-			server = new UdpClient(port);
-			receivePackets();
+		private string str;
+
+		public PacketString(string str){
+			this.str = str;
 		}
 
-		private void receivePackets(){
-			byte[] data = new byte[1024];
-			IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-			data = server.Receive(ref sender);
-			while(true){
-				UnconnectedPongPacket packet = new UnconnectedPongPacket(45, 457587, Server.getInstance().getMotd());
-				server.Send(packet.getContent(), packet.getContent().Length, sender);
-				Logger.getLogger().debug(BitConverter.ToString(packet.getContent()));
-				Logger.getLogger().debug(sender.Address + ":" + sender.Port);
-			}
+		public byte[] getBytes(){
+			byte[] strarray = System.Text.Encoding.ASCII.GetBytes(str);
+			byte[] strlen = BitConverter.GetBytes((short) strarray.Length);
+			Array.Reverse(strlen, 0, strlen.Length);
+			MemoryStream ms = new MemoryStream();
+			ms.Write(strlen, 0, strlen.Length);
+			ms.Write(strarray, 0, strarray.Length);
+			return ms.ToArray();
 		}
+	
 	}
 }
-	
+

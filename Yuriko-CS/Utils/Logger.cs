@@ -28,7 +28,22 @@ using System;
 namespace YurikoCS {
 	public class Logger {
 
-		public static void log(LogLevel level, String message){
+		private static Logger instance;
+
+		private string prefix;
+
+		public Logger(){
+			new Logger(null);
+		}
+
+		public Logger(string prefix){
+			if(instance == null){
+				instance = this;
+			}
+			this.prefix = prefix;
+		}
+
+		public void log(LogLevel level, String message){
 			switch(level){
 			case LogLevel.Info:
 				info(message);
@@ -54,40 +69,72 @@ namespace YurikoCS {
 			}
 		}
 
-		public static void info(String message){
+		public static Logger getLogger(){
+			return instance;
+		}
+
+		public void info(String message){
 			Console.ForegroundColor = ConsoleColor.Gray;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] INFO: " + message);
+			if(prefix == null){
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] INFO: " + message);
+			}else{
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] INFO: " + message);
+			}
 		}
 
-		public static void notice(String message){
+		public void notice(String message){
 			Console.ForegroundColor = ConsoleColor.Cyan;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] NOTICE: " + message);
+			if(prefix == null){
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] NOTICE: " + message);
+			}else{
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] NOTICE: " + message);
+			}
 		}
 
-		public static void warning(String message){
+		public void warning(String message){
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] WARNING: " + message);
+			if(prefix == null){
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] WARNING: " + message);
+			}else{
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] WARNING: " + message);
+			}
 		}
 
-		public static void error(String message){
+		public void error(String message){
 			Console.ForegroundColor = ConsoleColor.Red;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] ERROR: " + message);
+			if(prefix == null){
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] ERROR: " + message);
+			}else{
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] ERROR: " + message);
+			}
 		}
 
-		public static void critical(String message){
+		public void critical(String message){
 			Console.ForegroundColor = ConsoleColor.DarkRed;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] CRITICAL: " + message);
+			if(prefix == null){
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] CRITICAL: " + message);
+			}else{
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] CRITICAL: " + message);
+			}
 		}
 
-		public static void debug(String message){
+		public void debug(String message){
 			Console.ForegroundColor = ConsoleColor.Magenta;
 			DateTime time = DateTime.Now;
-			Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] DEBUG: " + message);
+			if(prefix == null){
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] DEBUG: " + message);
+			}else{
+				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] DEBUG: " + message);
+			}
+		}
+
+		public string getPrefix(){
+			return prefix;
 		}
 	}
 }

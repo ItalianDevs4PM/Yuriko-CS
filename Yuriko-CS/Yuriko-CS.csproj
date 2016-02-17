@@ -46,6 +46,11 @@
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\PacketID.cs" />
     <Compile Include="Network\PacketListener.cs" />
+    <Compile Include="Utils\Version.cs" />
+    <Compile Include="Utils\TextFormat.cs" />
+    <Compile Include="Network\Packets\UnconnectedPongPacket.cs" />
+    <Compile Include="Utils\PacketString.cs" />
+    <Compile Include="Network\Packets\UnconnectedPingPacket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
