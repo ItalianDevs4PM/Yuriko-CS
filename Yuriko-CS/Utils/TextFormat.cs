@@ -29,7 +29,8 @@ namespace YurikoCS {
 	class TextFormat {
 
 		//MCPE Escape Character
-		public const char MCPE_ESCAPE_CHAR = '§';
+		public const string MCPE_ESCAPE_CHAR = "\u00C2\u00A7";
+		public const char MCPE_SINGLE_ESCAPE_CHAR = '\u00A7';
 
 		//Color Constants
 		public readonly string BLACK = MCPE_ESCAPE_CHAR + "0";
@@ -56,6 +57,10 @@ namespace YurikoCS {
 		public readonly string UNDERLINE = MCPE_ESCAPE_CHAR + "n";
 		public readonly string ITALIC = MCPE_ESCAPE_CHAR + "o";
 		public readonly string RESET = MCPE_ESCAPE_CHAR + "r";
+
+		public static string formatMCPEString(string str){
+			return str.Replace(MCPE_SINGLE_ESCAPE_CHAR.ToString(), MCPE_ESCAPE_CHAR.ToString());
+		}
 
 		public static string translateColors(char escape_char, string str){
 			return str.Replace(escape_char.ToString(), MCPE_ESCAPE_CHAR.ToString());

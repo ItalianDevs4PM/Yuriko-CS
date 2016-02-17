@@ -73,7 +73,7 @@ namespace YurikoCS {
 				if(!serverprop.exists("motd")){
 					serverprop.set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
 				}
-				motd = TextFormat.translateColors('&', serverprop.getString("motd"));
+				motd = TextFormat.formatMCPEString(serverprop.getString("motd"));
 				if(!serverprop.exists("spawn-protection")){
 					serverprop.set("spawn-protection", 10);
 				}

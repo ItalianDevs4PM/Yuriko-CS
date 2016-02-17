@@ -36,7 +36,7 @@ namespace YurikoCS {
 		}
 
 		public byte[] getBytes(){
-			byte[] strarray = System.Text.Encoding.ASCII.GetBytes(str);
+			byte[] strarray = System.Text.Encoding.Default.GetBytes(str);
 			byte[] strlen = BitConverter.GetBytes((short) strarray.Length);
 			Array.Reverse(strlen, 0, strlen.Length);
 			MemoryStream ms = new MemoryStream();
