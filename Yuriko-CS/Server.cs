@@ -121,7 +121,7 @@ namespace YurikoCS {
 				}
 				serverprop.save("server.properties");
 				cfg = serverprop;
-				new PacketListener(19132);
+				new PacketListener(cfg.getInt("server-port"));
 			}else{
 				Logger.getLogger().critical("Server already initialized!");
 			}
