@@ -24,14 +24,15 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Net;
+using System.IO;
 
-namespace YurikoCS {
-	class Player {
-
-		public Player(string name, IPAddress address){
+namespace YurikoCS
+{
+	class YurikoCS
+	{
+		public static void Main (string[] args)
+		{
+			Server server = new Server();
 		}
 	}
 }
-

@@ -29,6 +29,7 @@ using System.Collections.Generic;
 namespace YurikoCS {
 	class PacketID {
 
+		public const byte MCPE_UNCONNECTED_PING = 0x01;
 		public const byte MCPE_ATTRIBUTE_PACKET = 0x60;
 		public const byte MCPE_LOGIN_PACKET = 0x8f;
 		public const byte MCPE_PLAY_STATUS_PACKET = 0x90;

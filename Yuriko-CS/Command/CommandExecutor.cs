@@ -26,6 +26,6 @@
 using System;
 
 namespace YurikoCS {
-	public class Command {
+	public class CommandExecutor {
 	}
 }
