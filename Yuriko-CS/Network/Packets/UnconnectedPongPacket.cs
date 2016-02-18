@@ -40,7 +40,7 @@ namespace YurikoCS {
 			this.pingid = pingid;
 			this.serverid = serverid;
 			this.servername = servername;
-			string formattedservername = "MCPE;" + servername + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";0;" + Server.getInstance().getMaxPlayers();
+			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(servername) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";0;" + Server.getInstance().getMaxPlayers();
 			packetcontent = new MemoryStream();
 			packetcontent.WriteByte(getID());
 			byte[] pingidb = BitConverter.GetBytes(pingid);

@@ -31,8 +31,13 @@ using System.Net.Sockets;
 namespace YurikoCS {
 	class PacketListener {
 		public static UdpClient server;
+		private int port;
 
 		public PacketListener(int port){
+			this.port = port;
+		}
+
+		public void Start(){
 			server = new UdpClient(port);
 			receivePackets();
 		}
@@ -44,8 +49,8 @@ namespace YurikoCS {
 			while(true){
 				UnconnectedPongPacket packet = new UnconnectedPongPacket(45, 457587, Server.getInstance().getMotd());
 				server.Send(packet.getContent(), packet.getContent().Length, sender);
-				Logger.getLogger().debug(BitConverter.ToString(packet.getContent()));
-				Logger.getLogger().debug(sender.Address + ":" + sender.Port);
+				Logger.getLogger().Debug(BitConverter.ToString(packet.getContent()));
+				Logger.getLogger().Debug(sender.Address + ":" + sender.Port);
 			}
 		}
 	}

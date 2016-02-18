@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace YurikoCS {
 	class Server {
@@ -40,13 +41,14 @@ namespace YurikoCS {
 		private static Config cfg;
 		private static string motd;
 		private static int maxplayers;
+		private Thread UDPServerThread;
 
 		public Server(){
 			if(instance == null){
 				instance = this;
 				new Logger();
 				String cwd = Directory.GetCurrentDirectory();
-				Logger.getLogger().notice("Starting Yuriko-CS v1.0");
+				Logger.getLogger().Info("Starting Yuriko-CS §bv" + Version.YURIKO_CS_VERSION + " §f[§bAPI " + Version.YURIKO_CS_API_VERSION + "§f][Build §b#" + Version.YURIKO_CS_BUILD + "§f]");
 				if(!Directory.Exists(cwd + "/players")){
 					Directory.CreateDirectory(cwd + "/players");
 				}
@@ -73,7 +75,7 @@ namespace YurikoCS {
 				if(!serverprop.exists("motd")){
 					serverprop.set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
 				}
-				motd = TextFormat.formatMCPEString(serverprop.getString("motd"));
+				motd = serverprop.getString("motd");
 				if(!serverprop.exists("spawn-protection")){
 					serverprop.set("spawn-protection", 10);
 				}
@@ -121,14 +123,29 @@ namespace YurikoCS {
 				}
 				serverprop.save("server.properties");
 				cfg = serverprop;
-				new PacketListener(cfg.getInt("server-port"));
+				Logger.getLogger().Info("Starting Server on port: §b" + getPort());
+				Logger.getLogger().Info("Starting UDP Server thread");
+				PacketListener pk = new PacketListener(getPort());
+				Thread UDPServerThread = new Thread(new ThreadStart(pk.Start));
+				UDPServerThread.Start();
+				waitConsoleInput();
 			}else{
-				Logger.getLogger().critical("Server already initialized!");
+				Logger.getLogger().Critical("Server already initialized!");
 			}
+		}
+
+		private void waitConsoleInput(){
+			Console.Write(">");
+			Console.ReadLine();
+			waitConsoleInput();
 		}
 
 		public string getMotd(){
 			return motd;
+		}
+
+		public int getPort(){
+			return cfg.getInt("server-port");
 		}
 
 		public int getMaxPlayers(){

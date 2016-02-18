@@ -43,28 +43,28 @@ namespace YurikoCS {
 			this.prefix = prefix;
 		}
 
-		public void log(LogLevel level, String message){
+		public void Log(LogLevel level, String message){
 			switch(level){
 			case LogLevel.Info:
-				info(message);
+				Info(message);
 				break;
 			case LogLevel.Notice:
-				notice(message);
+				Notice(message);
 				break;
 			case LogLevel.Warning:
-				warning(message);
+				Warning(message);
 				break;
 			case LogLevel.Error:
-				error(message);
+				Error(message);
 				break;
 			case LogLevel.Critical:
-				critical(message);
+				Critical(message);
 				break;
 			case LogLevel.Debug:
-				debug(message);
+				Debug(message);
 				break;
 			default:
-				info(message);
+				Info(message);
 				break;
 			}
 		}
@@ -73,63 +73,63 @@ namespace YurikoCS {
 			return instance;
 		}
 
-		public void info(String message){
+		public void Info(String message){
 			Console.ForegroundColor = ConsoleColor.Gray;
 			DateTime time = DateTime.Now;
 			if(prefix == null){
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] INFO: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f] INFO: " + message);
 			}else{
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] INFO: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f][" + prefix + "] INFO: " + message);
 			}
 		}
 
-		public void notice(String message){
+		public void Notice(String message){
 			Console.ForegroundColor = ConsoleColor.Cyan;
 			DateTime time = DateTime.Now;
 			if(prefix == null){
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] NOTICE: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§b NOTICE: " + message);
 			}else{
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] NOTICE: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§b[" + prefix + "] NOTICE: " + message);
 			}
 		}
 
-		public void warning(String message){
+		public void Warning(String message){
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			DateTime time = DateTime.Now;
 			if(prefix == null){
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] WARNING: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§e WARNING: " + message);
 			}else{
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] WARNING: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§e[" + prefix + "] WARNING: " + message);
 			}
 		}
 
-		public void error(String message){
+		public void Error(String message){
 			Console.ForegroundColor = ConsoleColor.Red;
 			DateTime time = DateTime.Now;
 			if(prefix == null){
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] ERROR: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§c ERROR: " + message);
 			}else{
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] ERROR: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§c[" + prefix + "] ERROR: " + message);
 			}
 		}
 
-		public void critical(String message){
+		public void Critical(String message){
 			Console.ForegroundColor = ConsoleColor.DarkRed;
 			DateTime time = DateTime.Now;
 			if(prefix == null){
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] CRITICAL: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§4 CRITICAL: " + message);
 			}else{
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] CRITICAL: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§4[" + prefix + "] CRITICAL: " + message);
 			}
 		}
 
-		public void debug(String message){
+		public void Debug(String message){
 			Console.ForegroundColor = ConsoleColor.Magenta;
 			DateTime time = DateTime.Now;
 			if(prefix == null){
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "] DEBUG: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§d DEBUG: " + message);
 			}else{
-				Console.WriteLine("[" + time.ToString("HH:mm:ss") + "][" + prefix + "] DEBUG: " + message);
+				TextFormat.formattedConsoleOutput("§f[§9" + time.ToString("HH:mm:ss") + "§f]§d[" + prefix + "] DEBUG: " + message);
 			}
 		}
 

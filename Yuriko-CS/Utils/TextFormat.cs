@@ -36,17 +36,17 @@ namespace YurikoCS {
 		public readonly string BLACK = MCPE_ESCAPE_CHAR + "0";
 		public readonly string DARK_BLUE = MCPE_ESCAPE_CHAR + "1";
 		public readonly string DARK_GREEN = MCPE_ESCAPE_CHAR + "2";
-		public readonly string DARK_AQUA = MCPE_ESCAPE_CHAR + "3";
+		public readonly string DARK_CYAN = MCPE_ESCAPE_CHAR + "3";
 		public readonly string DARK_RED = MCPE_ESCAPE_CHAR + "4";
-		public readonly string DARK_PURPLE = MCPE_ESCAPE_CHAR + "5";
-		public readonly string GOLD = MCPE_ESCAPE_CHAR + "6";
+		public readonly string DARK_MAGENTA = MCPE_ESCAPE_CHAR + "5";
+		public readonly string DARK_YELLOW = MCPE_ESCAPE_CHAR + "6";
 		public readonly string GRAY = MCPE_ESCAPE_CHAR + "7";
 		public readonly string DARK_GRAY = MCPE_ESCAPE_CHAR + "8";
 		public readonly string BLUE = MCPE_ESCAPE_CHAR + "9";
 		public readonly string GREEN = MCPE_ESCAPE_CHAR + "a";
-		public readonly string AQUA = MCPE_ESCAPE_CHAR + "b";
+		public readonly string CYAN = MCPE_ESCAPE_CHAR + "b";
 		public readonly string RED = MCPE_ESCAPE_CHAR + "c";
-		public readonly string LIGHT_PURPLE = MCPE_ESCAPE_CHAR + "d";
+		public readonly string MAGENTA = MCPE_ESCAPE_CHAR + "d";
 		public readonly string YELLOW = MCPE_ESCAPE_CHAR + "e";
 		public readonly string WHITE = MCPE_ESCAPE_CHAR + "f";
 
@@ -63,11 +63,63 @@ namespace YurikoCS {
 		}
 
 		public static string translateColors(char escape_char, string str){
-			return str.Replace(escape_char.ToString(), MCPE_ESCAPE_CHAR.ToString());
+			return str.Replace(escape_char.ToString(), MCPE_SINGLE_ESCAPE_CHAR.ToString());
 		}
 
 		//Prints formatted messages to the console
 		public static void formattedConsoleOutput(string message){
+			int index = 0;
+			Console.ForegroundColor = ConsoleColor.Gray;
+			foreach(char chr in message){
+				if(index + 1 < message.Length && message[index] == MCPE_SINGLE_ESCAPE_CHAR){
+					if(message[index + 1] == '0'){
+						Console.ForegroundColor = ConsoleColor.Black;
+					}else if(message[index + 1] == '1'){
+						Console.ForegroundColor = ConsoleColor.DarkBlue;
+					}else if(message[index + 1] == '2'){
+						Console.ForegroundColor = ConsoleColor.DarkGreen;
+					}else if(message[index + 1] == '3'){
+						Console.ForegroundColor = ConsoleColor.DarkCyan;
+					}else if(message[index + 1] == '4'){
+						Console.ForegroundColor = ConsoleColor.DarkRed;
+					}else if(message[index + 1] == '5'){
+						Console.ForegroundColor = ConsoleColor.DarkMagenta;
+					}else if(message[index + 1] == '6'){
+						Console.ForegroundColor = ConsoleColor.DarkYellow;
+					}else if(message[index + 1] == '7'){
+						Console.ForegroundColor = ConsoleColor.Gray;
+					}else if(message[index + 1] == '8'){
+						Console.ForegroundColor = ConsoleColor.DarkGray;
+					}else if(message[index + 1] == '9'){
+						Console.ForegroundColor = ConsoleColor.Blue;
+					}else if(message[index + 1] == 'a'){
+						Console.ForegroundColor = ConsoleColor.Green;
+					}else if(message[index + 1] == 'b'){
+						Console.ForegroundColor = ConsoleColor.Cyan;
+					}else if(message[index + 1] == 'c'){
+						Console.ForegroundColor = ConsoleColor.Red;
+					}else if(message[index + 1] == 'd'){
+						Console.ForegroundColor = ConsoleColor.Magenta;
+					}else if(message[index + 1] == 'e'){
+						Console.ForegroundColor = ConsoleColor.Yellow;
+					}else if(message[index + 1] == 'f'){
+						Console.ForegroundColor = ConsoleColor.White;
+					}else{
+						Console.Write(message[index]);
+						Console.Write(message[index + 1]);
+					}
+					if(index + 2 < message.Length){
+						Console.Write(message[index + 2]);
+						index++;
+					}
+					index++;
+				}else if(index < message.Length){
+					Console.Write(message[index]);
+				}
+				index++;
+			}
+			Console.Write("\n");
+			Console.ForegroundColor = ConsoleColor.White;
 		}
 
 	}

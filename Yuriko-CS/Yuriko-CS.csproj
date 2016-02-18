@@ -51,6 +51,11 @@
     <Compile Include="Network\Packets\UnconnectedPongPacket.cs" />
     <Compile Include="Utils\PacketString.cs" />
     <Compile Include="Network\Packets\UnconnectedPingPacket.cs" />
+    <Compile Include="Command\Command.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Permission\Permission.cs" />
+    <Compile Include="Command\CommandExecutor.cs" />
+    <Compile Include="Permission\PermissionDefaults.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
