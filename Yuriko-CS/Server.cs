@@ -42,6 +42,7 @@ namespace YurikoCS {
 		private static string motd;
 		private static int maxplayers;
 		private Thread UDPServerThread;
+		private List<Player> onlineplayers = new List<Player>();
 
 		public Server(){
 			if(instance == null){
@@ -160,6 +161,10 @@ namespace YurikoCS {
 		}
 
 		public void sendPacket(string ipaddress){
+		}
+
+		public List<Player> getOnlinePlayers(){
+			return onlineplayers;
 		}
 	}
 }

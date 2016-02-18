@@ -30,6 +30,9 @@ namespace YurikoCS {
 	class PacketID {
 
 		public const byte MCPE_UNCONNECTED_PING = 0x01;
+		public const byte MCPE_OPEN_CONNECTION_REQUEST = 0x05;
+		public const byte MCPE_OPEN_CONNECTION_REPLY = 0x06;
+		public const byte MCPE_OPEN_CONNECTIONS = 0x1C;
 		public const byte MCPE_ATTRIBUTE_PACKET = 0x60;
 		public const byte MCPE_LOGIN_PACKET = 0x8f;
 		public const byte MCPE_PLAY_STATUS_PACKET = 0x90;

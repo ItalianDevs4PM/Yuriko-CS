@@ -28,33 +28,28 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace YurikoCS {
-	class UnconnectedPongPacket : Packet {
-
-		public long pingid;
-		public string servername;
-
+	class OpenConnectionReplyPacket : Packet {
+		
+		public short mtusize;
+		
 		private MemoryStream packetcontent;
-
-		public UnconnectedPongPacket(long pingid, string servername){
-			this.pingid = pingid;
-			this.servername = servername;
-			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(servername) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";" + Server.getInstance().getOnlinePlayers().Count + ";" + Server.getInstance().getMaxPlayers();
+		
+		public OpenConnectionReplyPacket(short mtusize){
+			this.mtusize = mtusize;
 			packetcontent = new MemoryStream();
 			packetcontent.WriteByte(getID());
-			byte[] pingidb = BitConverter.GetBytes(pingid);
-			Array.Reverse(pingidb, 0, pingidb.Length);
-			packetcontent.Write(pingidb, 0, pingidb.Length);
-			byte[] serveridb = BitConverter.GetBytes((long) 0x00000000372cdc9e);
-			packetcontent.Write(serveridb, 0, serveridb.Length);
+			byte[] serverid = BitConverter.GetBytes((long) 0x00000000372cdc9e);
+			packetcontent.Write(serverid, 0, serverid.Length);
 			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
-			byte[] servernameb = new PacketString(formattedservername).getBytes();
-			packetcontent.Write(servernameb, 0, servernameb.Length);
+			byte[] mtusizeb = BitConverter.GetBytes(mtusize);
+			Array.Reverse(mtusizeb, 0, mtusizeb.Length);
+			packetcontent.Write(mtusizeb, 0, mtusizeb.Length);
 		}
-
+		
 		public byte getID(){
-			return PacketID.MCPE_OPEN_CONNECTIONS;
+			return PacketID.MCPE_OPEN_CONNECTION_REPLY;
 		}
-
+		
 		public byte[] getContent(){
 			return packetcontent.ToArray();
 		}

@@ -48,12 +48,19 @@ namespace YurikoCS {
 			IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
 			while(true){
 				data = server.Receive(ref sender);
-				if(data[0] == PacketID.MCPE_UNCONNECTED_PING){
-					UnconnectedPongPacket packet = new UnconnectedPongPacket(45, 457587, Server.getInstance().getMotd());
+				if(data[0] == PacketID.MCPE_UNCONNECTED_PING){	//Send Motd on UNCONNECTED_PING request
+					UnconnectedPongPacket packet = new UnconnectedPongPacket(45, Server.getInstance().getMotd());
 					server.Send(packet.getContent(), packet.getContent().Length, sender);
 					Logger.getLogger().Debug(BitConverter.ToString(packet.getContent()));
 					Logger.getLogger().Debug(sender.Address + ":" + sender.Port);
-				}
+				}else if(data[0] == PacketID.MCPE_OPEN_CONNECTION_REQUEST){	//Initialize Client connection
+					OpenConnectionReplyPacket packet = new OpenConnectionReplyPacket(1447);
+					server.Send(packet.getContent(), packet.getContent().Length, sender);
+				}/*else if(data[0] == PacketID.MCPE_OPEN_CONNECTION_REQUEST){	//Initialize Client connection
+					//CALL PRELOGINEVENT HERE
+					//CHECK PROTOCOL HERE
+					//Server.getInstance().getOnlinePlayers().Add(new Player
+				}*/
 			}
 		}
 	}
