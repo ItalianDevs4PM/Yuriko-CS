@@ -37,6 +37,7 @@ namespace YurikoCS {
 		}
 
 		public Permission(string node, string description){
+			this.description = description;
 		}
 
 		public Permission(string node, string description, PermissionDefaults defaults){
