@@ -38,7 +38,7 @@ namespace YurikoCS {
 		public UnconnectedPongPacket(long pingid, string servername){
 			this.pingid = pingid;
 			this.servername = servername;
-			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(servername) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";" + Server.getInstance().getOnlinePlayers().Count + ";" + Server.getInstance().getMaxPlayers();
+			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(servername) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";" + Server.GetInstance().GetOnlinePlayers().Count + ";" + Server.GetInstance().GetMaxPlayers();
 			packetcontent = new MemoryStream();
 			packetcontent.WriteByte(getID());
 			byte[] pingidb = BitConverter.GetBytes(pingid);

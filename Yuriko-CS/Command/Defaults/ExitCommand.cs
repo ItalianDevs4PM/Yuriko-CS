@@ -24,9 +24,21 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace YurikoCS {
-	public interface CommandExecutor {
-		bool OnCommand(CommandSender sender, Command command, string[] args);
+	public class ExitCommand : CommandExecutor {
+
+		public ExitCommand(){}
+
+		public bool OnCommand(CommandSender sender, Command command, string[] args){
+			if(sender.HasPermission("yurikocs.command.exit")){
+				sender.SendMessage("Debug");
+				return true;
+			}else{
+				sender.SendMessage("§cYou don't have permissions to execute this command");
+				return false;
+			}
+		}
 	}
 }

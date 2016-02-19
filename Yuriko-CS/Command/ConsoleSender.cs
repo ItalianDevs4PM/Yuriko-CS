@@ -25,31 +25,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
-namespace YurikoCS {
-	class Player /*: CommandSender*/ {
+namespace YurikoCS
+{
+	public class ConsoleSender : CommandSender {
 
-		private Dictionary<string, Permission> playerpermissions = new Dictionary<string, Permission>();
+		private Dictionary<string, Permission> consolepermissions = new Dictionary<string, Permission>();
 
-		public Player(string name, IPAddress address){
+		public ConsoleSender() {}
+
+		public string GetName(){
+			return "CONSOLE";
+		}
+
+		public void SendMessage(string message){
+			Logger.getLogger().Info(message);
 		}
 
 		public bool HasPermission(string node){
-			return playerpermissions.ContainsKey(node.ToLower());
+			return consolepermissions.ContainsKey(node.ToLower());
 		}
 
 		public bool AddPermission(Permission permission){
 			if(HasPermission(permission.GetNode())){
 				return false;
 			}
-			playerpermissions.Add(permission.GetNode(), permission);
+			consolepermissions.Add(permission.GetNode(), permission);
 			return true;
 		}
 		
 		public bool OverridePermission(Permission permission){
 			if(HasPermission(permission.GetNode())){
-				playerpermissions[permission.GetNode()] = permission;
+				consolepermissions[permission.GetNode()] = permission;
 				return true;
 			}
 			return false;
@@ -57,7 +64,7 @@ namespace YurikoCS {
 		
 		public bool RemovePermission(Permission permission){
 			if(HasPermission(permission.GetNode())){
-				playerpermissions.Remove(permission.GetNode());
+				consolepermissions.Remove(permission.GetNode());
 				return true;
 			}
 			return false;
@@ -69,20 +76,13 @@ namespace YurikoCS {
 				if(permission.GetPermissionLevel() == PermissionLevel.All){	//Add permission to All players
 					AddPermission(permission);
 				}else if(permission.GetPermissionLevel() == PermissionLevel.OP){	//Add permission only to OPs
-					if(IsOP()){
-						AddPermission(permission);
-					}
-				}else if(permission.GetPermissionLevel() == PermissionLevel.NotOP){	//Add permission only to players who are not OPs
-					if(!IsOP()){
-						AddPermission(permission);
-					}
+					AddPermission(permission);
 				}
 			}
 		}
 
 		public bool IsOP(){
-			//To-Do
-			return false;
+			return true;
 		}
 		
 	}

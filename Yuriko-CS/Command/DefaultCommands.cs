@@ -26,7 +26,12 @@
 using System;
 
 namespace YurikoCS {
-	public interface CommandExecutor {
-		bool OnCommand(CommandSender sender, Command command, string[] args);
+	public class DefaultCommands {
+
+		public static void RestoreDefaultCommands(){
+			Command.RegisterCommand(new Command("exit", new ExitCommand()));
+		}
+		
 	}
 }
+

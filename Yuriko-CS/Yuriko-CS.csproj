@@ -54,9 +54,15 @@
     <Compile Include="Player.cs" />
     <Compile Include="Permission\Permission.cs" />
     <Compile Include="Command\CommandExecutor.cs" />
-    <Compile Include="Permission\PermissionDefaults.cs" />
     <Compile Include="YurikoCS.cs" />
     <Compile Include="Network\Packets\OpenConnectionReplyPacket.cs" />
+    <Compile Include="Command\CommandSender.cs" />
+    <Compile Include="Command\ConsoleSender.cs" />
+    <Compile Include="Utils\StringFunctions.cs" />
+    <Compile Include="Command\Defaults\ExitCommand.cs" />
+    <Compile Include="Command\DefaultCommands.cs" />
+    <Compile Include="Permission\PermissionLevel.cs" />
+    <Compile Include="Permission\DefaultPermissions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

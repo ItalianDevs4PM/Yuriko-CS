@@ -24,9 +24,17 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace YurikoCS {
-	public interface CommandExecutor {
-		bool OnCommand(CommandSender sender, Command command, string[] args);
+	public class StringFunctions {
+		public static bool IsNullOrOnlySpaces(string str){
+			foreach(char chr in str){
+				if(chr != ' '){
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 }

@@ -43,6 +43,7 @@ namespace YurikoCS {
 		private static int maxplayers;
 		private Thread UDPServerThread;
 		private List<Player> onlineplayers = new List<Player>();
+		private ConsoleSender consolesender;
 
 		public Server(){
 			if(instance == null){
@@ -124,9 +125,12 @@ namespace YurikoCS {
 				}
 				serverprop.save("server.properties");
 				cfg = serverprop;
-				Logger.getLogger().Info("Starting Server on port: §b" + getPort());
+				consolesender = new ConsoleSender();
+				DefaultPermissions.RestoreDefaultPermissions();
+				DefaultCommands.RestoreDefaultCommands();
+				Logger.getLogger().Info("Starting Server on port: §b" + GetPort());
 				Logger.getLogger().Info("Starting UDP Server thread");
-				PacketListener pk = new PacketListener(getPort());
+				PacketListener pk = new PacketListener(GetPort());
 				Thread UDPServerThread = new Thread(new ThreadStart(pk.Start));
 				UDPServerThread.Start();
 				waitConsoleInput();
@@ -137,34 +141,39 @@ namespace YurikoCS {
 
 		private void waitConsoleInput(){
 			Console.Write(">");
-			Console.ReadLine();
+			string cmd = Console.ReadLine();
+			Command.Execute(GetConsoleSender(), cmd);
 			waitConsoleInput();
 		}
 
-		public string getMotd(){
+		public string GetMotd(){
 			return motd;
 		}
 
-		public int getPort(){
+		public int GetPort(){
 			return cfg.getInt("server-port");
 		}
 
-		public int getMaxPlayers(){
+		public int GetMaxPlayers(){
 			return maxplayers;
 		}
 
-		public static Server getInstance(){
+		public static Server GetInstance(){
 			return instance;
 		}
 
-		public void sendPacket(IPAddress ipaddress){
+		public void SendPacket(IPAddress ipaddress){
 		}
 
-		public void sendPacket(string ipaddress){
+		public void SendPacket(string ipaddress){
 		}
 
-		public List<Player> getOnlinePlayers(){
+		public List<Player> GetOnlinePlayers(){
 			return onlineplayers;
+		}
+
+		public ConsoleSender GetConsoleSender(){
+			return consolesender;
 		}
 	}
 }

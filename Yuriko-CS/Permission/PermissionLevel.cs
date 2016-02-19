@@ -26,7 +26,10 @@
 using System;
 
 namespace YurikoCS {
-	public interface CommandExecutor {
-		bool OnCommand(CommandSender sender, Command command, string[] args);
-	}
+	public enum PermissionLevel {
+		All,
+		None,
+		OP,
+		NotOP
+	};
 }

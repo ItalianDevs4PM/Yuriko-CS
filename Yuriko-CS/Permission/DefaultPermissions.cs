@@ -26,7 +26,13 @@
 using System;
 
 namespace YurikoCS {
-	public interface CommandExecutor {
-		bool OnCommand(CommandSender sender, Command command, string[] args);
+	public class DefaultPermissions {
+		
+		public static void RestoreDefaultPermissions(){
+			//Default Commands Permissions
+			Permission.RegisterPermission(new Permission("yurikocs.command.exit", "Save all levels and exit from Yuriko-CS", PermissionLevel.OP));
+			Permission.RecalculatePermissions();
+		}
 	}
 }
+

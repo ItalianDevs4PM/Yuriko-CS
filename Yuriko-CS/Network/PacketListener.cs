@@ -49,7 +49,7 @@ namespace YurikoCS {
 			while(true){
 				data = server.Receive(ref sender);
 				if(data[0] == PacketID.MCPE_UNCONNECTED_PING){	//Send Motd on UNCONNECTED_PING request
-					UnconnectedPongPacket packet = new UnconnectedPongPacket(45, Server.getInstance().getMotd());
+					UnconnectedPongPacket packet = new UnconnectedPongPacket(45, Server.GetInstance().GetMotd());
 					server.Send(packet.getContent(), packet.getContent().Length, sender);
 					Logger.getLogger().Debug(BitConverter.ToString(packet.getContent()));
 					Logger.getLogger().Debug(sender.Address + ":" + sender.Port);
