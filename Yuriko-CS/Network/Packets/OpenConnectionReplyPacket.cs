@@ -38,11 +38,12 @@ namespace YurikoCS {
 			this.mtusize = mtusize;
 			packetcontent = new MemoryStream();
 			packetcontent.WriteByte(getID());
+			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
 			byte[] serverid = BitConverter.GetBytes((long) 0x00000000372cdc9e);
 			packetcontent.Write(serverid, 0, serverid.Length);
-			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
+			packetcontent.WriteByte(0); //Server security
 			byte[] mtusizeb = BitConverter.GetBytes(mtusize);
-			Array.Reverse(mtusizeb, 0, mtusizeb.Length);
+			//Array.Reverse(mtusizeb, 0, mtusizeb.Length);
 			packetcontent.Write(mtusizeb, 0, mtusizeb.Length);
 		}
 		
