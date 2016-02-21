@@ -40,7 +40,7 @@ namespace YurikoCS {
 			this.servername = servername;
 			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(servername) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";" + Server.GetInstance().GetOnlinePlayers().Count + ";" + Server.GetInstance().GetMaxPlayers();
 			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(getID());
+			packetcontent.WriteByte(GetID());
 			byte[] pingidb = BitConverter.GetBytes(pingid);
 			Array.Reverse(pingidb, 0, pingidb.Length);
 			packetcontent.Write(pingidb, 0, pingidb.Length);
@@ -51,11 +51,11 @@ namespace YurikoCS {
 			packetcontent.Write(servernameb, 0, servernameb.Length);
 		}
 
-		public byte getID(){
+		public byte GetID(){
 			return PacketID.MCPE_OPEN_CONNECTIONS;
 		}
 
-		public byte[] getContent(){
+		public byte[] GetContent(){
 			return packetcontent.ToArray();
 		}
 	}

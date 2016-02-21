@@ -28,27 +28,33 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace YurikoCS {
-	class OpenConnectionReplyPacket : Packet {
+	class OpenConnectionReply2Packet : Packet {
+		
+		public short ClientPort;
 		
 		public short mtusize;
-		
+
 		private MemoryStream packetcontent;
 		
-		public OpenConnectionReplyPacket(short mtusize){
+		public OpenConnectionReply2Packet(short ClientPort, short mtusize){
 			this.mtusize = mtusize;
+			this.ClientPort = ClientPort;
 			packetcontent = new MemoryStream();
 			packetcontent.WriteByte(GetID());
 			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
 			byte[] serverid = BitConverter.GetBytes((long) 0x00000000372cdc9e);
 			packetcontent.Write(serverid, 0, serverid.Length);
-			packetcontent.WriteByte(0); //Server security
+			byte[] ClientPortb = BitConverter.GetBytes(ClientPort);
+			Array.Reverse(ClientPortb, 0, ClientPortb.Length);
+			packetcontent.Write(ClientPortb, 0, ClientPortb.Length);
 			byte[] mtusizeb = BitConverter.GetBytes(mtusize);
-			//Array.Reverse(mtusizeb, 0, mtusizeb.Length);
+			Array.Reverse(mtusizeb, 0, mtusizeb.Length);
 			packetcontent.Write(mtusizeb, 0, mtusizeb.Length);
+			packetcontent.WriteByte(0); //Server security
 		}
 		
 		public byte GetID(){
-			return PacketID.MCPE_OPEN_CONNECTION_REPLY;
+			return PacketID.MCPE_OPEN_CONNECTION_REPLY_2;
 		}
 		
 		public byte[] GetContent(){

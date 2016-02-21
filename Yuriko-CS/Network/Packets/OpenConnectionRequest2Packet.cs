@@ -28,27 +28,42 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace YurikoCS {
-	class OpenConnectionReplyPacket : Packet {
-		
+	class OpenConnectionRequest2Packet : Packet {
+
+		public byte[] securitycookie = new byte[5];
+
+		public short ServerPort;
+
 		public short mtusize;
+
+		public long ClientID;
 		
 		private MemoryStream packetcontent;
 		
-		public OpenConnectionReplyPacket(short mtusize){
-			this.mtusize = mtusize;
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
-			byte[] serverid = BitConverter.GetBytes((long) 0x00000000372cdc9e);
-			packetcontent.Write(serverid, 0, serverid.Length);
-			packetcontent.WriteByte(0); //Server security
-			byte[] mtusizeb = BitConverter.GetBytes(mtusize);
+		public OpenConnectionRequest2Packet(byte[] data){
+			packetcontent = new MemoryStream(data);
+			packetcontent.Position = 17;
+			packetcontent.Read(securitycookie, 0, 5);
+			Array.Reverse(securitycookie, 0, securitycookie.Length);
+			packetcontent.Position = 22;
+			byte[] ServerPortb = new byte[2];
+			packetcontent.Read(ServerPortb, 0, 2);
+			Array.Reverse(ServerPortb, 0, ServerPortb.Length);
+			ServerPort = BitConverter.ToInt16(ServerPortb, 0);
+			packetcontent.Position = 24;
+			byte[] mtusizeb = new byte[2];
+			packetcontent.Read(mtusizeb, 0, 2);
 			//Array.Reverse(mtusizeb, 0, mtusizeb.Length);
-			packetcontent.Write(mtusizeb, 0, mtusizeb.Length);
+			mtusize = BitConverter.ToInt16(mtusizeb, 0);
+			packetcontent.Position = 26;
+			byte[] ClientIDb = new byte[8];
+			packetcontent.Read(ClientIDb, 0, 8);
+			Array.Reverse(ClientIDb, 0, ClientIDb.Length);
+			ClientID = BitConverter.ToInt64(ClientIDb, 0);
 		}
 		
 		public byte GetID(){
-			return PacketID.MCPE_OPEN_CONNECTION_REPLY;
+			return PacketID.MCPE_OPEN_CONNECTION_REQUEST_2;
 		}
 		
 		public byte[] GetContent(){

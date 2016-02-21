@@ -63,6 +63,12 @@
     <Compile Include="Command\DefaultCommands.cs" />
     <Compile Include="Permission\PermissionLevel.cs" />
     <Compile Include="Permission\DefaultPermissions.cs" />
+    <Compile Include="Network\EncapsulatedPacket.cs" />
+    <Compile Include="Network\Packets\OpenConnectionRequest2Packet.cs" />
+    <Compile Include="Network\Packets\OpenConnectionReply2Packet.cs" />
+    <Compile Include="Network\Packets\ClientConnectPacket.cs" />
+    <Compile Include="Math\Triad.cs" />
+    <Compile Include="Network\EncapsulationHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

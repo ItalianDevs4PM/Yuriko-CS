@@ -27,12 +27,20 @@ using System;
 using System.Collections.Generic;
 
 namespace YurikoCS {
-	interface Packet {
+	class Triad {
 
-		byte GetID();
+		public byte[] bytes;
 
-		byte[] GetContent();
-		
+		public Triad(byte[] bytes){
+			this.bytes = bytes;
+		}
+
+		public short ToInt16(){
+			return (short)(bytes[0] + (bytes[1] << 8) + (bytes[2] << 16));
+		}
+
+		public int ToInt32(){
+			return (int)(bytes[0] + (bytes[1] << 8) + (bytes[2] << 16));
+		}
 	}
 }
-

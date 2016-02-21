@@ -50,17 +50,23 @@ namespace YurikoCS {
 				data = server.Receive(ref sender);
 				if(data[0] == PacketID.MCPE_UNCONNECTED_PING){	//Send Motd on UNCONNECTED_PING request
 					UnconnectedPongPacket packet = new UnconnectedPongPacket(45, Server.GetInstance().GetMotd());
-					server.Send(packet.getContent(), packet.getContent().Length, sender);
-					Logger.getLogger().Debug(BitConverter.ToString(packet.getContent()));
+					server.Send(packet.GetContent(), packet.GetContent().Length, sender);
+					Logger.getLogger().Debug(BitConverter.ToString(packet.GetContent()));
 					Logger.getLogger().Debug(sender.Address + ":" + sender.Port);
 				}else if(data[0] == PacketID.MCPE_OPEN_CONNECTION_REQUEST){	//Initialize Client connection
-					OpenConnectionReplyPacket packet = new OpenConnectionReplyPacket(1447);
-					server.Send(packet.getContent(), packet.getContent().Length, sender);
-				}/*else if(data[0] == PacketID.MCPE_OPEN_CONNECTION_REQUEST){	//Initialize Client connection
-					//CALL PRELOGINEVENT HERE
-					//CHECK PROTOCOL HERE
-					//Server.getInstance().getOnlinePlayers().Add(new Player
-				}*/
+					OpenConnectionReplyPacket packet = new OpenConnectionReplyPacket((short)(data.Length - 17));
+					server.Send(packet.GetContent(), packet.GetContent().Length, sender);
+				}else if(data[0] == PacketID.MCPE_OPEN_CONNECTION_REQUEST_2){	//Continue Client connection
+					OpenConnectionRequest2Packet req2packet = new OpenConnectionRequest2Packet(data);
+					OpenConnectionReply2Packet reply2packet = new OpenConnectionReply2Packet((short) sender.Port, req2packet.mtusize);
+					server.Send(reply2packet.GetContent(), reply2packet.GetContent().Length, sender);
+					Logger.getLogger().Error(req2packet.ServerPort + ":" + req2packet.mtusize);
+				}else if(data[0] <= 0x80 && data[0] >= 0x8F){	//Client Login
+					OpenConnectionRequest2Packet req2packet = new OpenConnectionRequest2Packet(data);
+					OpenConnectionReply2Packet reply2packet = new OpenConnectionReply2Packet((short) sender.Port, req2packet.mtusize);
+					server.Send(reply2packet.GetContent(), reply2packet.GetContent().Length, sender);
+					Logger.getLogger().Error(req2packet.ServerPort + ":" + req2packet.mtusize);
+				}
 			}
 		}
 	}

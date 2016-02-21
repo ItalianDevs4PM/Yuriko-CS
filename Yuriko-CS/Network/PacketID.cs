@@ -32,7 +32,12 @@ namespace YurikoCS {
 		public const byte MCPE_UNCONNECTED_PING = 0x01;
 		public const byte MCPE_OPEN_CONNECTION_REQUEST = 0x05;
 		public const byte MCPE_OPEN_CONNECTION_REPLY = 0x06;
+		public const byte MCPE_OPEN_CONNECTION_REQUEST_2 = 0x07;
+		public const byte MCPE_OPEN_CONNECTION_REPLY_2 = 0x08;
 		public const byte MCPE_OPEN_CONNECTIONS = 0x1C;
+		public const byte MCPE_CLIENT_CONNECT_PACKET = 0x09;
+		public const byte MCPE_SERVER_HANDSHAKE_PACKET = 0x10;
+		public const byte MCPE_CLIENT_HANDSHAKE_PACKET = 0x13;
 		public const byte MCPE_ATTRIBUTE_PACKET = 0x60;
 		public const byte MCPE_LOGIN_PACKET = 0x8f;
 		public const byte MCPE_PLAY_STATUS_PACKET = 0x90;

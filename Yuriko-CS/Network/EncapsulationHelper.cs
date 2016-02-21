@@ -25,14 +25,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace YurikoCS {
-	interface Packet {
+	class EncapsulationHelper {
 
-		byte GetID();
+		private MemoryStream stream;
 
-		byte[] GetContent();
-		
+		public EncapsulationHelper(byte[] data){
+			stream = new MemoryStream(data);
+		}
+
+		public byte GetID(){
+		}
+
+		public byte GetEncapsulationFormat(){
+		}
+
+		public Triad GetCount(){
+		}
+
+		public byte[] GetPayload(){
+		}
+
+		public byte[] GetDataPacket(){
+		}
 	}
 }
-

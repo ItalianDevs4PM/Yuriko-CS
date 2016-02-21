@@ -27,11 +27,15 @@ using System;
 using System.Collections.Generic;
 
 namespace YurikoCS {
-	interface Packet {
+	interface EncapsulatedPacket : Packet {
+		
+		void Encode();
+		
+		void Decode();
 
-		byte GetID();
+		byte GetCustomPacketID();
 
-		byte[] GetContent();
+		byte[] GetEncapsulatedContent();
 		
 	}
 }
