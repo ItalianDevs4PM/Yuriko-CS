@@ -1,5 +1,7 @@
 # Yuriko-CS
 
+[![Join the chat at https://gitter.im/ItalianDevs4PM/Yuriko-CS](https://badges.gitter.im/ItalianDevs4PM/Yuriko-CS.svg)](https://gitter.im/ItalianDevs4PM/Yuriko-CS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **Yuriko-CS**: A fast and full-featured Minecraft: Pocket Edition server software written in C#
 
 > This program is free software: you can redistribute it and/or modify
@@ -12,8 +14,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.<br><br>
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-[![Join the chat at https://gitter.im/ItalianDevs4PM/Yuriko-CS](https://badges.gitter.im/ItalianDevs4PM/Yuriko-CS.svg)](https://gitter.im/ItalianDevs4PM/Yuriko-CS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Links
 ####[Website](http://devs4pm.eu)
