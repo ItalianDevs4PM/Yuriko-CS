@@ -69,6 +69,9 @@
     <Compile Include="Network\Packets\ClientConnectPacket.cs" />
     <Compile Include="Math\Triad.cs" />
     <Compile Include="Network\EncapsulationHelper.cs" />
+    <Compile Include="Network\Packets\ServerHandshakePacket.cs" />
+    <Compile Include="Network\Packets\ACK.cs" />
+    <Compile Include="Network\Packets\NACK.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

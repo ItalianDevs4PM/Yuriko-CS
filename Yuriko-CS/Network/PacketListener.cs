@@ -51,8 +51,6 @@ namespace YurikoCS {
 				if(data[0] == PacketID.MCPE_UNCONNECTED_PING){	//Send Motd on UNCONNECTED_PING request
 					UnconnectedPongPacket packet = new UnconnectedPongPacket(45, Server.GetInstance().GetMotd());
 					server.Send(packet.GetContent(), packet.GetContent().Length, sender);
-					Logger.getLogger().Debug(BitConverter.ToString(packet.GetContent()));
-					Logger.getLogger().Debug(sender.Address + ":" + sender.Port);
 				}else if(data[0] == PacketID.MCPE_OPEN_CONNECTION_REQUEST){	//Initialize Client connection
 					OpenConnectionReplyPacket packet = new OpenConnectionReplyPacket((short)(data.Length - 17));
 					server.Send(packet.GetContent(), packet.GetContent().Length, sender);
@@ -60,12 +58,15 @@ namespace YurikoCS {
 					OpenConnectionRequest2Packet req2packet = new OpenConnectionRequest2Packet(data);
 					OpenConnectionReply2Packet reply2packet = new OpenConnectionReply2Packet((short) sender.Port, req2packet.mtusize);
 					server.Send(reply2packet.GetContent(), reply2packet.GetContent().Length, sender);
-					Logger.getLogger().Error(req2packet.ServerPort + ":" + req2packet.mtusize);
-				}else if(data[0] <= 0x80 && data[0] >= 0x8F){	//Client Login
-					OpenConnectionRequest2Packet req2packet = new OpenConnectionRequest2Packet(data);
-					OpenConnectionReply2Packet reply2packet = new OpenConnectionReply2Packet((short) sender.Port, req2packet.mtusize);
-					server.Send(reply2packet.GetContent(), reply2packet.GetContent().Length, sender);
-					Logger.getLogger().Error(req2packet.ServerPort + ":" + req2packet.mtusize);
+				}else if(data[0] >= 0x80 && data[0] <= 0x8F){	//Client Login
+					EncapsulationHelper helper = EncapsulationHelper.Decode(data);
+					Logger.getLogger().Info("[§b" + sender.Address + ":" + sender.Port + "§f] connected to the server");
+					byte packetID = helper.GetPacketID();
+					if(packetID == PacketID.MCPE_CLIENT_CONNECT_PACKET){
+						ClientConnectPacket ccp = new ClientConnectPacket(data);
+						ServerHandshakePacket shp = new ServerHandshakePacket((short) port, ccp.Session, new Triad(0));
+						server.Send(shp.GetContent(), shp.GetContent().Length, sender);
+					}
 				}
 			}
 		}

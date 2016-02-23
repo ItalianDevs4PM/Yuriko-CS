@@ -28,55 +28,33 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace YurikoCS {
-	class ClientConnectPacket : EncapsulatedPacket {
+	class ClientConnectPacket : Packet {
 		
-		public short ClientPort;
+		public long ClientID;
 		
-		public short mtusize;
+		public long Session;
 
 		private MemoryStream packetcontent;
 		
 		public ClientConnectPacket(byte[] data){
+			data = EncapsulationHelper.Decode(data).GetData();
 			packetcontent = new MemoryStream(data);
-			packetcontent.Position = 17;
-			packetcontent.Read(securitycookie, 0, 5);
-			Array.Reverse(securitycookie, 0, securitycookie.Length);
-			packetcontent.Position = 22;
-			byte[] ServerPortb = new byte[2];
-			packetcontent.Read(ServerPortb, 0, 2);
-			Array.Reverse(ServerPortb, 0, ServerPortb.Length);
-			ServerPort = BitConverter.ToInt16(ServerPortb, 0);
-			packetcontent.Position = 24;
-			byte[] mtusizeb = new byte[2];
-			packetcontent.Read(mtusizeb, 0, 2);
-			//Array.Reverse(mtusizeb, 0, mtusizeb.Length);
-			mtusize = BitConverter.ToInt16(mtusizeb, 0);
-			packetcontent.Position = 26;
 			byte[] ClientIDb = new byte[8];
 			packetcontent.Read(ClientIDb, 0, 8);
-			Array.Reverse(ClientIDb, 0, ClientIDb.Length);
 			ClientID = BitConverter.ToInt64(ClientIDb, 0);
-		}
-
-		public void Encode(){}
-
-		public void Decode(){
-
+			packetcontent.Position = 8;
+			byte[] Sessionb = new byte[8];
+			packetcontent.Read(Sessionb, 0, 8);
+			Session = BitConverter.ToInt64(Sessionb, 0);
 		}
 
 		public byte GetID(){
 			return PacketID.MCPE_CLIENT_CONNECT_PACKET;
 		}
-
-		public byte GetCustomPacketID(){
-			return packetcontent.ToArray()[0];
-		}
 		
 		public byte[] GetContent(){
 			return packetcontent.ToArray();
 		}
-
-		public byte[] GetEncapsulatedContent(){
-		}
+		
 	}
 }
