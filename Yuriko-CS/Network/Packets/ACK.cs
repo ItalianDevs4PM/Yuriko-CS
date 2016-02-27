@@ -28,19 +28,45 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace YurikoCS {
-	class ACK : Packet {//TODO
-		
-		public long ClientID;
-		
-		public long Session;
+	class ACK : Packet {
+
+		public long Identifier;
 		
 		private MemoryStream packetcontent;
+
 		
-		public ACK(byte[] data){
+		public ACK(Packet packet, Triad packetCount){
+			packetcontent = new MemoryStream();
+			packetcontent.WriteByte(GetID());
+			packetcontent.Write(new byte[]{0x00, 0x01}, 0, 2);
+			packetcontent.WriteByte(0x01);
+			byte[] packetCountb = new byte[3];
+			packetCountb = packetCount.GetBytes();
+			Array.Reverse(packetCountb, 0, 3);
+			packetcontent.Write(packetCountb, 0, 3); //Packet Count
+			//packetCountb = new Triad(packetCount.ToInt32() + 1).GetBytes();
+			//Array.Reverse(packetCountb, 0, 3);
+			//stream.Write(packetCountb, 0, 3); //Packet Count
+			//packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
+		}
+
+		public ACK(Triad packetCount){
+			packetcontent = new MemoryStream();
+			packetcontent.WriteByte(GetID());
+			packetcontent.Write(new byte[]{0x00, 0x01}, 0, 2);
+			packetcontent.WriteByte(0x01);
+			byte[] packetCountb = new byte[3];
+			packetCountb = packetCount.GetBytes();
+			//Array.Reverse(packetCountb, 0, 3);
+			packetcontent.Write(packetCountb, 0, 3); //Packet Count
+			//packetCountb = new Triad(packetCount.ToInt32() + 1).GetBytes();
+			//Array.Reverse(packetCountb, 0, 3);
+			//stream.Write(packetCountb, 0, 3); //Packet Count
+			//packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
 		}
 		
 		public byte GetID(){
-			return 0xA0;
+			return 0xC0;
 		}
 		
 		public byte[] GetContent(){

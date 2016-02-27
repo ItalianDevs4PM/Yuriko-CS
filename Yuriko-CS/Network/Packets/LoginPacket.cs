@@ -28,30 +28,33 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace YurikoCS {
-	public class StringFunctions {
-		public static bool IsNullOrOnlySpaces(string str){
-			foreach(char chr in str){
-				if(chr != ' '){
-					return false;
-				}
-			}
-			return true;
-		}
+	class LoginPacket : Packet {
+		
+		public string Username;
 
-		public static string GetMCPEStringFromStream(MemoryStream stream, int index){
-			byte[] data = stream.ToArray();
-			byte[] lengthb = new byte[]{data[index + 1], data[index]};
-			short length = BitConverter.ToInt16(lengthb, 0);
-			string str = "";
-			short size = 0;
-			while(true){
-				if(size == length){
-					return str;
-				}
-				str += (char) data[index + 2 + size];
-				size++;
-			}
-			return str;
+		public int Protocol1;
+
+		public int Protocol2;
+
+		public int ClientID;
+
+		public string Realms;
+		
+		private MemoryStream packetcontent;
+		
+		public LoginPacket(byte[] data){
+			data = EncapsulationHelper.Decode(data).GetData();
+			packetcontent = new MemoryStream(data);
+			Username = StringFunctions.GetMCPEStringFromStream(packetcontent, 1);
 		}
+		
+		public byte GetID(){
+			return PacketID.MCPE_CLIENT_CONNECT_PACKET;
+		}
+		
+		public byte[] GetContent(){
+			return packetcontent.ToArray();
+		}
+		
 	}
 }

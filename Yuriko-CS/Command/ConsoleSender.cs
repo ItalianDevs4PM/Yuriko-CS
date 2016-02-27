@@ -39,7 +39,7 @@ namespace YurikoCS
 		}
 
 		public void SendMessage(string message){
-			Logger.getLogger().Info(message);
+			Logger.GetLogger().Info(message);
 		}
 
 		public bool HasPermission(string node){

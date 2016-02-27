@@ -50,7 +50,7 @@ namespace YurikoCS {
 				instance = this;
 				new Logger();
 				String cwd = Directory.GetCurrentDirectory();
-				Logger.getLogger().Info("Starting Yuriko-CS §bv" + Version.YURIKO_CS_VERSION + " §f[§bAPI " + Version.YURIKO_CS_API_VERSION + "§f][Build §b#" + Version.YURIKO_CS_BUILD + "§f]");
+				Logger.GetLogger().Info("Starting Yuriko-CS §bv" + Version.YURIKO_CS_VERSION + " §f[§bAPI " + Version.YURIKO_CS_API_VERSION + "§f][Build §b#" + Version.YURIKO_CS_BUILD + "§f]");
 				if(!Directory.Exists(cwd + "/players")){
 					Directory.CreateDirectory(cwd + "/players");
 				}
@@ -128,14 +128,14 @@ namespace YurikoCS {
 				consolesender = new ConsoleSender();
 				DefaultPermissions.RestoreDefaultPermissions();
 				DefaultCommands.RestoreDefaultCommands();
-				Logger.getLogger().Info("Starting Server on port: §b" + GetPort());
-				Logger.getLogger().Info("Starting UDP Server thread");
+				Logger.GetLogger().Info("Starting Server on port: §b" + GetPort());
+				Logger.GetLogger().Info("Starting UDP Server thread");
 				PacketListener pk = new PacketListener(GetPort());
 				Thread UDPServerThread = new Thread(new ThreadStart(pk.Start));
 				UDPServerThread.Start();
 				waitConsoleInput();
 			}else{
-				Logger.getLogger().Critical("Server already initialized!");
+				Logger.GetLogger().Critical("Server already initialized!");
 			}
 		}
 

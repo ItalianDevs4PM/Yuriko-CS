@@ -69,7 +69,7 @@ namespace YurikoCS {
 			}
 		}
 
-		public static Logger getLogger(){
+		public static Logger GetLogger(){
 			return instance;
 		}
 

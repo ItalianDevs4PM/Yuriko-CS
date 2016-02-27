@@ -37,6 +37,7 @@ namespace YurikoCS {
 		private byte encapsulationFormat;
 		private short packetLength;
 		private Triad packetCount;
+		private Triad packetCount2;
 
 //		public EncapsulationHelper(byte[] data, bool isDecode){
 //			stream = new MemoryStream(data);
@@ -64,7 +65,7 @@ namespace YurikoCS {
 			enchelper.stream.Position = 1;
 			byte[] packetCountb = new byte[3];
 			enchelper.stream.Read(packetCountb, 0, 3);
-			Array.Reverse(packetCountb, 0, 3);
+			//Array.Reverse(packetCountb, 0, 3);
 			enchelper.packetCount = new Triad(packetCountb);
 			enchelper.stream.Position = 4;
 			enchelper.encapsulationFormat = Convert.ToByte(enchelper.stream.ReadByte());
@@ -119,7 +120,7 @@ namespace YurikoCS {
 			//Custom Packet Format
 			byte[] packetCountb = new byte[3];
 			packetCountb = packetCount.GetBytes();
-			Array.Reverse(packetCountb, 0, 3);
+			//Array.Reverse(packetCountb, 0, 3);
 			enchelper.stream.Write(packetCountb, 0, 3);
 			enchelper.stream.WriteByte(encapsulationFormat);
 			enchelper.packetLength = (short) data.Length;
@@ -135,11 +136,13 @@ namespace YurikoCS {
 			Array.Reverse(dataLengthb, 0, 2);
 			stream.Write(dataLengthb, 0, 2); //Packet Length
 			if(encapsulationFormat == 0x40){	//Encapsulation Format 0x40
+				packetCount = new Triad(packetCount.ToInt32() + 1);
 				byte[] packetCountb = new byte[3];
 				packetCountb = packetCount.GetBytes();
-				Array.Reverse(packetCountb, 0, 3);
+				//Array.Reverse(packetCountb, 0, 3);
 				stream.Write(packetCountb, 0, 3); //Packet Count
 			}else if(encapsulationFormat == 0x60){	//Encapsulation Format 0x60
+				packetCount2 = new Triad(packetCount.ToInt32() + 1);
 				byte[] packetCountb = new byte[3];
 				packetCountb = packetCount.GetBytes();
 				Array.Reverse(packetCountb, 0, 3);
@@ -166,6 +169,10 @@ namespace YurikoCS {
 
 		public Triad GetPacketCount(){
 			return packetCount;
+		}
+
+		public Triad GetPacketCount2(){
+			return packetCount2;
 		}
 
 		//If isDecode, get datapacket only

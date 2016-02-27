@@ -60,12 +60,37 @@ namespace YurikoCS {
 					server.Send(reply2packet.GetContent(), reply2packet.GetContent().Length, sender);
 				}else if(data[0] >= 0x80 && data[0] <= 0x8F){	//Client Login
 					EncapsulationHelper helper = EncapsulationHelper.Decode(data);
-					Logger.getLogger().Info("[§b" + sender.Address + ":" + sender.Port + "§f] connected to the server");
 					byte packetID = helper.GetPacketID();
-					if(packetID == PacketID.MCPE_CLIENT_CONNECT_PACKET){
-						ClientConnectPacket ccp = new ClientConnectPacket(data);
-						ServerHandshakePacket shp = new ServerHandshakePacket((short) port, ccp.Session, new Triad(0));
-						server.Send(shp.GetContent(), shp.GetContent().Length, sender);
+					Logger.GetLogger().Debug(packetID.ToString("X2"));
+					//Process packet
+					if(packetID == PacketID.MCPE_PING_PACKET){
+						PingPacket ping = new PingPacket(data);
+						PongPacket pong = new PongPacket(ping.Identifier, helper.GetPacketCount());
+						//server.Send(pong.GetContent(), pong.GetContent().Length, sender);
+					}else{
+						//Send ACK to Client
+						ACK ack = new ACK(new Triad(helper.GetPacketCount().ToInt32()));
+						server.Send(ack.GetContent(), ack.GetContent().Length, sender);
+						if(packetID == PacketID.MCPE_CLIENT_CONNECT_PACKET){
+							ClientConnectPacket ccp = new ClientConnectPacket(data);
+							//ACK ack = new ACK(ccp, new Triad(0));
+							//server.Send(ack.GetContent(), ack.GetContent().Length, sender);
+							ServerHandshakePacket shp = new ServerHandshakePacket((short) port, ccp.Session, new Triad(0));
+							server.Send(shp.GetContent(), shp.GetContent().Length, sender);
+							Logger.GetLogger().Info("[§b" + sender.Address + ":" + sender.Port + "§f] connected to the server");
+						}else if(packetID == PacketID.MCPE_LOGIN_PACKET){
+							LoginPacket lpacket = new LoginPacket(data);
+							//CALL PRELOGIN EVENT HERE
+							LoginStatusPacket lstatus = new LoginStatusPacket(1, new Triad(1)); //To-Do
+							server.Send(lstatus.GetContent(), lstatus.GetContent().Length, sender);
+							//CALL LOGIN EVENT HERE
+							StartGamePacket startgame = new StartGamePacket(100, 100, 1, 0, 128, 0, 0, 0, 0, new Triad(2)); //To-Do
+							server.Send(startgame.GetContent(), startgame.GetContent().Length, sender);
+							Logger.GetLogger().Info("§e" + lpacket.Username + " joined the game");
+							SetTimePacket settime = new SetTimePacket(1000, new Triad(3)); //To-Do
+							server.Send(settime.GetContent(), settime.GetContent().Length, sender);
+							//CALL JOIN EVENT HERE
+						}
 					}
 				}
 			}
