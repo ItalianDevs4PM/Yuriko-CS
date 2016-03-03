@@ -34,27 +34,29 @@ namespace YurikoCS {
 		
 		public long Session;
 
-		private MemoryStream packetcontent;
-		
-		public ClientConnectPacket(byte[] data){
-			data = EncapsulationHelper.Decode(data).GetData();
-			packetcontent = new MemoryStream(data);
-			byte[] ClientIDb = new byte[8];
-			packetcontent.Read(ClientIDb, 0, 8);
-			ClientID = BitConverter.ToInt64(ClientIDb, 0);
-			packetcontent.Position = 8;
-			byte[] Sessionb = new byte[8];
-			packetcontent.Read(Sessionb, 0, 8);
-			Session = BitConverter.ToInt64(Sessionb, 0);
-		}
+		public byte[] data;
+
+		private MemoryStream PacketContent;
+
+		public ClientConnectPacket(){}
 
 		public byte GetID(){
 			return PacketID.MCPE_CLIENT_CONNECT_PACKET;
 		}
-		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+
+		public byte[] Encode(){
+			return null;
 		}
+		
+		public byte[] Decode(){
+			data = EncapsulationHelper.Decode(data).GetData();
+			PacketContent = BinaryHelper.Reset(PacketContent, data);
+			ClientID = BinaryHelper.ReadLong(PacketContent);
+			Session = BinaryHelper.ReadLong(PacketContent);
+			return PacketContent.ToArray();
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 		
 	}
 }

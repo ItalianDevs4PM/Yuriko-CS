@@ -43,9 +43,15 @@ namespace YurikoCS {
 			return 0xA0;
 		}
 		
-		public byte[] GetContent(){
+		public byte[] Encode(){
 			return packetcontent.ToArray();
 		}
+
+		public byte[] Decode(){
+			return packetcontent.ToArray();
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 		
 	}
 }

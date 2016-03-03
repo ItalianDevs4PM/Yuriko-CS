@@ -30,33 +30,33 @@ using System.IO;
 namespace YurikoCS {
 	class UnconnectedPongPacket : Packet {
 
-		public long pingid;
-		public string servername;
+		public long PingID;
 
-		private MemoryStream packetcontent;
+		public string ServerName;
 
-		public UnconnectedPongPacket(long pingid, string servername){
-			this.pingid = pingid;
-			this.servername = servername;
-			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(servername) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";" + Server.GetInstance().GetOnlinePlayers().Count + ";" + Server.GetInstance().GetMaxPlayers();
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			byte[] pingidb = BitConverter.GetBytes(pingid);
-			Array.Reverse(pingidb, 0, pingidb.Length);
-			packetcontent.Write(pingidb, 0, pingidb.Length);
-			byte[] serveridb = BitConverter.GetBytes((long) 0x00000000372cdc9e);
-			packetcontent.Write(serveridb, 0, serveridb.Length);
-			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
-			byte[] servernameb = new PacketString(formattedservername).getBytes();
-			packetcontent.Write(servernameb, 0, servernameb.Length);
-		}
+		private MemoryStream PacketContent;
+
+		public UnconnectedPongPacket(){}
 
 		public byte GetID(){
 			return PacketID.MCPE_OPEN_CONNECTIONS;
 		}
 
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteLong(PacketContent, PingID);
+			BinaryHelper.WriteBytes(PacketContent, BitConverter.GetBytes((long) 0x00000000372cdc9e));
+			BinaryHelper.WriteBytes(PacketContent, Server.OFFLINE_MESSAGE_DATA_ID);
+			string formattedservername = "MCPE;" + TextFormat.formatMCPEString(ServerName) + ";" + Server.MCPE_PROTOCOL_ID.ToString("X2") + ";" + Server.MCPE_VERSION + ";" + Server.GetInstance().GetOnlinePlayers().Count + ";" + Server.GetInstance().GetMaxPlayers();
+			BinaryHelper.WriteString(PacketContent, formattedservername);
+			return PacketContent.ToArray();
 		}
+
+		public byte[] Decode(){
+			return null;
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 	}
 }

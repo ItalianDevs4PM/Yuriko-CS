@@ -40,58 +40,39 @@ namespace YurikoCS {
 		public float Y;
 		public float Z;
 
-		private MemoryStream packetcontent;
+		public Triad PacketCount;
+
+		private MemoryStream PacketContent;
 		
-		public StartGamePacket(int Seed, int Generator, int Gamemode, int SpawnX, int SpawnY, int SpawnZ, float X, float Y, float Z, Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			this.Seed = Seed;
-			byte[] Seedb = BitConverter.GetBytes(Seed);
-			Array.Reverse(Seedb, 0, 4);
-			packetcontent.Write(Seedb, 0, 4);
-			packetcontent.WriteByte(0);	//Dimension (To-Do)
-			this.Generator = Generator;
-			byte[] Generatorb = BitConverter.GetBytes(Generator);
-			Array.Reverse(Generatorb, 0, 4);
-			packetcontent.Write(Generatorb, 0, 4);
-			this.Gamemode = Gamemode;
-			byte[] Gamemodeb = BitConverter.GetBytes(Gamemode);
-			Array.Reverse(Gamemodeb, 0, 4);
-			packetcontent.Write(Gamemodeb, 0, 4);
-			this.SpawnX = SpawnX;
-			byte[] SpawnXb = BitConverter.GetBytes(SpawnX);
-			Array.Reverse(SpawnXb, 0, 4);
-			packetcontent.Write(SpawnXb, 0, 4);
-			this.SpawnY = SpawnY;
-			byte[] SpawnYb = BitConverter.GetBytes(SpawnY);
-			Array.Reverse(SpawnYb, 0, 4);
-			packetcontent.Write(SpawnYb, 0, 4);
-			this.SpawnZ = SpawnZ;
-			byte[] SpawnZb = BitConverter.GetBytes(SpawnZ);
-			Array.Reverse(SpawnZb, 0, 4);
-			packetcontent.Write(SpawnZb, 0, 4);
-			this.X = X;
-			byte[] Xb = BitConverter.GetBytes(X);
-			Array.Reverse(Xb, 0, Xb.Length);
-			packetcontent.Write(Xb, 0, Xb.Length);
-			this.Y = Y;
-			byte[] Yb = BitConverter.GetBytes(Y);
-			Array.Reverse(Yb, 0, Yb.Length);
-			packetcontent.Write(Yb, 0, Yb.Length);
-			this.Z = Z;
-			byte[] Zb = BitConverter.GetBytes(Z);
-			Array.Reverse(Zb, 0, Zb.Length);
-			packetcontent.Write(Zb, 0, Zb.Length);
-			packetcontent.WriteByte(0);	//Unknown
-			packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
+		public StartGamePacket(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_START_GAME_PACKET;
 		}
+
+		public void SetPacketCount(Triad PacketCount){
+			this.PacketCount = PacketCount;
+		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteInt(PacketContent, Seed);
+			BinaryHelper.WriteInt(PacketContent, Generator);
+			BinaryHelper.WriteInt(PacketContent, Gamemode);
+			BinaryHelper.WriteInt(PacketContent, SpawnX);
+			BinaryHelper.WriteInt(PacketContent, SpawnY);
+			BinaryHelper.WriteInt(PacketContent, SpawnZ);
+			BinaryHelper.WriteFloat(PacketContent, X);
+			BinaryHelper.WriteFloat(PacketContent, Y);
+			BinaryHelper.WriteFloat(PacketContent, Z);
+			BinaryHelper.WriteByte(PacketContent, 0x00);	//Unknown
+			PacketContent = new MemoryStream(EncapsulationHelper.Encode(PacketContent.ToArray(), 0x40, PacketCount, 0x84).GetData());
+			return PacketContent.ToArray();
+		}
+
+		public byte[] Decode(){
+			return null;
 		}
 		
 	}

@@ -31,8 +31,14 @@ namespace YurikoCS {
 
 		byte GetID();
 
-		byte[] GetContent();
-		
+		byte[] Encode();
+
+		byte[] Decode();
+
+		/**
+		 * Internal usage ONLY!
+		 */
+		void SetPacketCount(Triad PacketCount);
 	}
 }
 

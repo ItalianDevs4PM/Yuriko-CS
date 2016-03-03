@@ -29,49 +29,58 @@ using System.IO;
 
 namespace YurikoCS {
 	class ACK : Packet {
-
-		public long Identifier;
 		
-		private MemoryStream packetcontent;
-
+		public Triad FirstPacket;
 		
-		public ACK(Packet packet, Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			packetcontent.Write(new byte[]{0x00, 0x01}, 0, 2);
-			packetcontent.WriteByte(0x01);
-			byte[] packetCountb = new byte[3];
-			packetCountb = packetCount.GetBytes();
-			Array.Reverse(packetCountb, 0, 3);
-			packetcontent.Write(packetCountb, 0, 3); //Packet Count
-			//packetCountb = new Triad(packetCount.ToInt32() + 1).GetBytes();
-			//Array.Reverse(packetCountb, 0, 3);
-			//stream.Write(packetCountb, 0, 3); //Packet Count
-			//packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
+		public Triad LastPacket;
+		
+		public bool AdditionalPacket;
+	
+		public byte[] data;
 
-		public ACK(Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			packetcontent.Write(new byte[]{0x00, 0x01}, 0, 2);
-			packetcontent.WriteByte(0x01);
-			byte[] packetCountb = new byte[3];
-			packetCountb = packetCount.GetBytes();
-			//Array.Reverse(packetCountb, 0, 3);
-			packetcontent.Write(packetCountb, 0, 3); //Packet Count
-			//packetCountb = new Triad(packetCount.ToInt32() + 1).GetBytes();
-			//Array.Reverse(packetCountb, 0, 3);
-			//stream.Write(packetCountb, 0, 3); //Packet Count
-			//packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
+		private MemoryStream PacketContent;
+		
+		public ACK(){}
 		
 		public byte GetID(){
-			return 0xC0;
+			return PacketID.ACK;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteShort(PacketContent, 1);
+			if(AdditionalPacket){
+				BinaryHelper.WriteByte(PacketContent, 0x01);
+			}else{
+				BinaryHelper.WriteByte(PacketContent, 0x00);
+			}
+			BinaryHelper.WriteTriad(PacketContent, FirstPacket);
+			if(!AdditionalPacket){
+				if(LastPacket == null){
+					BinaryHelper.WriteTriad(PacketContent, new Triad(0));
+				}else{
+					BinaryHelper.WriteTriad(PacketContent, LastPacket);
+				}
+			}
+			return PacketContent.ToArray();
 		}
+
+		public byte[] Decode(){
+			PacketContent = BinaryHelper.Reset(PacketContent, data);
+			if(BinaryHelper.ReadByte(PacketContent, 3) == 0x01){
+				AdditionalPacket = true;
+			}else{
+				AdditionalPacket = false;
+			}
+			FirstPacket = BinaryHelper.ReadTriad(PacketContent);
+			if(!AdditionalPacket){
+				LastPacket = BinaryHelper.ReadTriad(PacketContent);
+			}
+			return PacketContent.ToArray();
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 		
 	}
 }

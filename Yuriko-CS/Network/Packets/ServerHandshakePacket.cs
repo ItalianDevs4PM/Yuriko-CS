@@ -33,38 +33,21 @@ namespace YurikoCS {
 		public short ServerPort;
 		
 		public long Session;
-		
-		private MemoryStream packetcontent;
-		
-		public ServerHandshakePacket(short ServerPort, long Session, Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			packetcontent.Write(new byte[]{0x04, 0x3F, 0x57, 0xFE}, 0, 4);
-			packetcontent.WriteByte(0xE7);
-			byte[] ServerPortb = BitConverter.GetBytes(ServerPort);
-			Array.Reverse(ServerPortb, 0, ServerPortb.Length);
-			packetcontent.Write(ServerPortb, 0, ServerPortb.Length);
-			putDataArray();
-			packetcontent.WriteByte(0x00); //Unkown (0x00 0x00)
-			packetcontent.WriteByte(0x00);	
-			byte[] Sessionb = BitConverter.GetBytes(Session);
-			packetcontent.Write(Sessionb, 0, Sessionb.Length);
-			packetcontent.Write(new byte[]{0x00, 0x00, 0x00, 0x00, 0x04, 0x44, 0x0B, 0xA9}, 0, 8); //Unknown
-			packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
 
-		private void putDataArray(){
+		public Triad PacketCount;
+		
+		private MemoryStream PacketContent;
+		
+		public ServerHandshakePacket(){}
+
+		private void PutDataArray(){
 			byte[] unknown1 = new byte[] { 0x80, 0xFF, 0xFF, 0xFE};
 			byte[] unknown2 = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF};
-			byte[] unknown1lb = new Triad(unknown1.Length).GetBytes();
-			Array.Reverse(unknown1lb, 0, 3);
-			packetcontent.Write(unknown1lb, 0, 3);
-			packetcontent.Write(unknown1, 0, 4);
+			BinaryHelper.WriteTriad(PacketContent, new Triad(unknown1.Length));
+			BinaryHelper.WriteBytes(PacketContent, unknown1);
 			for(int i = 0; i < 9; i++){
-				byte[] unknown2lb = new Triad(unknown2.Length).GetBytes();
-				Array.Reverse(unknown2lb, 0, 3);
-				packetcontent.Write(unknown2lb, 0, 3);
-				packetcontent.Write(unknown2, 0, 4);
+				BinaryHelper.WriteTriad(PacketContent, new Triad(unknown2.Length));
+				BinaryHelper.WriteBytes(PacketContent, unknown2);
 			}
 		}
 		
@@ -72,8 +55,27 @@ namespace YurikoCS {
 			return PacketID.MCPE_SERVER_HANDSHAKE_PACKET;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteBytes(PacketContent, new byte[]{0x04, 0x3F, 0x57, 0xFE});
+			BinaryHelper.WriteByte(PacketContent, 0xE7);
+			BinaryHelper.WriteShort(PacketContent, ServerPort);
+			PutDataArray();
+			BinaryHelper.WriteByte(PacketContent, 0x00);	//Unkown (0x00 0x00)
+			BinaryHelper.WriteByte(PacketContent, 0x00);
+			BinaryHelper.WriteLong(PacketContent, Session);
+			BinaryHelper.WriteBytes(PacketContent, new byte[]{0x00, 0x00, 0x00, 0x00, 0x04, 0x44, 0x0B, 0xA9}); //Unknown
+			PacketContent = new MemoryStream(EncapsulationHelper.Encode(PacketContent.ToArray(), 0x40, PacketCount, 0x84).GetData());	//Encode Packet
+			return PacketContent.ToArray();
+		}
+
+		public byte[] Decode(){
+			return null;
+		}
+
+		public void SetPacketCount(Triad PacketCount){
+			this.PacketCount = PacketCount;
 		}
 		
 	}

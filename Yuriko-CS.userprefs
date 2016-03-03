@@ -1,36 +1,36 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <AuthorInfo Name="Yuriko-CS" Email="" Copyright="2016 - ItalianDevs4PM" Company="ItalianDevs4PM" Trademark="" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yuriko-CS\Network\EncapsulationHelper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Yuriko-CS\Network\Packets\UnconnectedPongPacket.cs">
     <Files>
-      <File FileName="Yuriko-CS\Player.cs" Line="33" Column="49" />
-      <File FileName="Yuriko-CS\Server.cs" Line="45" Column="58" />
-      <File FileName="Yuriko-CS\Network\PacketListener.cs" Line="68" Column="81" />
-      <File FileName="c:\Users\Utente\Documents\Projects\Yuriko-CS\Yuriko-CS\Command\CommandExecutor.cs" Line="1" Column="1" />
-      <File FileName="Yuriko-CS\Network\PacketID.cs" Line="40" Column="56" />
-      <File FileName="Yuriko-CS\YurikoCS.cs" Line="1" Column="1" />
-      <File FileName="Yuriko-CS\Network\Packets\UnconnectedPongPacket.cs" Line="44" Column="1" />
-      <File FileName="Yuriko-CS\Network\Packets\OpenConnectionReplyPacket.cs" Line="47" Column="54" />
-      <File FileName="Yuriko-CS\Permission\Permission.cs" Line="1" Column="1" />
-      <File FileName="Yuriko-CS\Network\EncapsulatedPacket.cs" Line="36" Column="28" />
-      <File FileName="Yuriko-CS\Network\Packet.cs" Line="32" Column="13" />
-      <File FileName="Yuriko-CS\Network\Packets\OpenConnectionRequest2Packet.cs" Line="44" Column="1" />
-      <File FileName="Yuriko-CS\Network\Packets\OpenConnectionReply2Packet.cs" Line="38" Column="3" />
-      <File FileName="Yuriko-CS\Network\Packets\ClientConnectPacket.cs" Line="37" Column="3" />
-      <File FileName="Yuriko-CS\Math\Triad.cs" Line="44" Column="4" />
-      <File FileName="Yuriko-CS\Network\EncapsulationHelper.cs" Line="37" Column="4" />
+      <File FileName="Yuriko-CS\Utils\BinaryHelper.cs" Line="483" Column="5" />
+      <File FileName="Yuriko-CS\Network\Packets\UnconnectedPongPacket.cs" Line="61" Column="1" />
+      <File FileName="Yuriko-CS\Network\Packets\UnconnectedPingPacket.cs" Line="1" Column="1" />
+      <File FileName="Yuriko-CS\Network\Packets\StartGamePacket.cs" Line="55" Column="4" />
+      <File FileName="Yuriko-CS\Network\Packets\SetTimePacket.cs" Line="46" Column="26" />
+      <File FileName="Yuriko-CS\Network\Packets\ServerHandshakePacket.cs" Line="59" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\PongPacket.cs" Line="46" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\PingPacket.cs" Line="52" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\OpenConnectionRequest2Packet.cs" Line="56" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\OpenConnectionReplyPacket.cs" Line="31" Column="8" />
+      <File FileName="Yuriko-CS\Network\Packets\OpenConnectionReply2Packet.cs" Line="46" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\NACK.cs" Line="1" Column="1" />
+      <File FileName="Yuriko-CS\Network\Packets\LoginStatusPacket.cs" Line="47" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\LoginPacket.cs" Line="60" Column="20" />
+      <File FileName="Yuriko-CS\Network\Packets\ClientConnectPacket.cs" Line="52" Column="54" />
+      <File FileName="Yuriko-CS\Network\Packets\ACK.cs" Line="50" Column="20" />
+      <File FileName="Yuriko-CS\Server.cs" Line="136" Column="35" />
+      <File FileName="Yuriko-CS\Network\PacketHandler.cs" Line="113" Column="36" />
+      <File FileName="Yuriko-CS\Player.cs" Line="118" Column="15" />
+      <File FileName="Yuriko-CS\Network\Packet.cs" Line="36" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Yuriko-CS" expanded="True">
-            <Node name="Command" expanded="True" />
-            <Node name="Math" expanded="True" />
+          <Node name="Yuriko-CS" expanded="True" selected="True">
             <Node name="Network" expanded="True">
               <Node name="Packets" expanded="True" />
-              <Node name="EncapsulationHelper.cs" selected="True" />
             </Node>
-            <Node name="Permission" expanded="True" />
             <Node name="Utils" expanded="True" />
           </Node>
         </State>
@@ -38,7 +38,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Utente\Documents\Projects\Yuriko-CS\Yuriko-CS\Network\Packets\UnconnectedPongPacket.cs" line="60" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

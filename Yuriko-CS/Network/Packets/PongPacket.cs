@@ -31,24 +31,31 @@ namespace YurikoCS {
 	class PongPacket : Packet {
 		
 		public long Identifier;
+
+		public Triad PacketCount;
 		
-		private MemoryStream packetcontent;
+		private MemoryStream PacketContent;
 		
-		public PongPacket(long Identifier, Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			byte[] Identifierb = BitConverter.GetBytes(Identifier);
-			//Array.Reverse(Identifierb, 0, Identifierb.Length);
-			packetcontent.Write(Identifierb, 0, Identifierb.Length);
-			packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
+		public PongPacket(){}
 
 		public byte GetID(){
 			return PacketID.MCPE_PONG_PACKET;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteLong(PacketContent, Identifier);
+			PacketContent = new MemoryStream(EncapsulationHelper.Encode(PacketContent.ToArray(), 0x40, PacketCount, 0x84).GetData());	//Encode Packet
+			return PacketContent.ToArray();
+		}
+
+		public byte[] Decode(){
+			return null;
+		}
+
+		public void SetPacketCount(Triad PacketCount){
+			this.PacketCount = PacketCount;
 		}
 		
 	}

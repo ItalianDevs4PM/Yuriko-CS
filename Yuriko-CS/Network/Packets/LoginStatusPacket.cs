@@ -31,26 +31,32 @@ namespace YurikoCS {
 	class LoginStatusPacket : Packet {
 		
 		public int Status;
+
+		public Triad PacketCount;
 		
-		private MemoryStream packetcontent;
+		private MemoryStream PacketContent;
 		
 		
-		public LoginStatusPacket(int Status, Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			this.Status = Status;
-			byte[] Statusb = BitConverter.GetBytes(Status);
-			Array.Reverse(Statusb, 0, 4);
-			packetcontent.Write(Statusb, 0, 4);
-			packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
+		public LoginStatusPacket(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_LOGIN_STATUS_PACKET;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteInt(PacketContent, Status);
+			PacketContent = new MemoryStream(EncapsulationHelper.Encode(PacketContent.ToArray(), 0x40, PacketCount, 0x84).GetData());
+			return PacketContent.ToArray();
+		}
+
+		public byte[] Decode(){
+			return null;
+		}
+
+		public void SetPacketCount(Triad PacketCount){
+			this.PacketCount = PacketCount;
 		}
 		
 	}

@@ -37,17 +37,17 @@ namespace YurikoCS {
 		public const string MCPE_VERSION = "0.14.0.7";
 		public const byte MCPE_PROTOCOL_ID = 0x45;
 
-		private static Server instance;
-		private static Config cfg;
-		private static string motd;
-		private static int maxplayers;
+		private static Server Instance;
+		private static Config Cfg;
+		private static string Motd;
+		private static int MaxPlayers;
 		private Thread UDPServerThread;
-		private List<Player> onlineplayers = new List<Player>();
-		private ConsoleSender consolesender;
+		public List<Player> OnlinePlayers = new List<Player>();
+		private ConsoleSender ConsSender;
 
 		public Server(){
-			if(instance == null){
-				instance = this;
+			if(Instance == null){
+				Instance = this;
 				new Logger();
 				String cwd = Directory.GetCurrentDirectory();
 				Logger.GetLogger().Info("Starting Yuriko-CS §bv" + Version.YURIKO_CS_VERSION + " §f[§bAPI " + Version.YURIKO_CS_API_VERSION + "§f][Build §b#" + Version.YURIKO_CS_BUILD + "§f]");
@@ -73,11 +73,11 @@ namespace YurikoCS {
 				if(!serverprop.exists("max-players")){
 					serverprop.set("max-players", 20);
 				}
-				maxplayers = serverprop.getInt("max-players");
+				MaxPlayers = serverprop.getInt("max-players");
 				if(!serverprop.exists("motd")){
 					serverprop.set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
 				}
-				motd = serverprop.getString("motd");
+				Motd = serverprop.getString("motd");
 				if(!serverprop.exists("spawn-protection")){
 					serverprop.set("spawn-protection", 10);
 				}
@@ -124,15 +124,16 @@ namespace YurikoCS {
 					serverprop.set("rcon-password", "random");
 				}
 				serverprop.save("server.properties");
-				cfg = serverprop;
-				consolesender = new ConsoleSender();
+				Cfg = serverprop;
+				ConsSender = new ConsoleSender();
 				DefaultPermissions.RestoreDefaultPermissions();
 				DefaultCommands.RestoreDefaultCommands();
 				Logger.GetLogger().Info("Starting Server on port: §b" + GetPort());
 				Logger.GetLogger().Info("Starting UDP Server thread");
-				PacketListener pk = new PacketListener(GetPort());
-				Thread UDPServerThread = new Thread(new ThreadStart(pk.Start));
-				UDPServerThread.Start();
+				PacketHandler pk = new PacketHandler(GetPort());
+				pk.Start();
+				Thread UDPServerSenderThread = new Thread(new ThreadStart(pk.StartSendThread));
+				UDPServerSenderThread.Start();
 				waitConsoleInput();
 			}else{
 				Logger.GetLogger().Critical("Server already initialized!");
@@ -147,19 +148,19 @@ namespace YurikoCS {
 		}
 
 		public string GetMotd(){
-			return motd;
+			return Motd;
 		}
 
 		public int GetPort(){
-			return cfg.getInt("server-port");
+			return Cfg.getInt("server-port");
 		}
 
 		public int GetMaxPlayers(){
-			return maxplayers;
+			return MaxPlayers;
 		}
 
 		public static Server GetInstance(){
-			return instance;
+			return Instance;
 		}
 
 		public void SendPacket(IPAddress ipaddress){
@@ -169,11 +170,11 @@ namespace YurikoCS {
 		}
 
 		public List<Player> GetOnlinePlayers(){
-			return onlineplayers;
+			return OnlinePlayers;
 		}
 
 		public ConsoleSender GetConsoleSender(){
-			return consolesender;
+			return ConsSender;
 		}
 	}
 }

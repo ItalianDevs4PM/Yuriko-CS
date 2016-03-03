@@ -39,22 +39,33 @@ namespace YurikoCS {
 		public int ClientID;
 
 		public string Realms;
+
+		public byte[] data;
 		
-		private MemoryStream packetcontent;
+		private MemoryStream PacketContent;
 		
-		public LoginPacket(byte[] data){
-			data = EncapsulationHelper.Decode(data).GetData();
-			packetcontent = new MemoryStream(data);
-			Username = StringFunctions.GetMCPEStringFromStream(packetcontent, 1);
-		}
+		public LoginPacket(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_CLIENT_CONNECT_PACKET;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			return null;
 		}
+
+		public byte[] Decode(){
+			data = EncapsulationHelper.Decode(data).GetData();
+			PacketContent = BinaryHelper.Reset(PacketContent, data);
+			Username = BinaryHelper.ReadString(PacketContent, 1);
+			Protocol1 = BinaryHelper.ReadInt(PacketContent);
+			Protocol2 = BinaryHelper.ReadInt(PacketContent);
+			ClientID = BinaryHelper.ReadInt(PacketContent);
+			Realms = BinaryHelper.ReadString(PacketContent);
+			return PacketContent.ToArray();
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 		
 	}
 }

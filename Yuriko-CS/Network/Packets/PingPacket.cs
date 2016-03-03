@@ -31,24 +31,28 @@ namespace YurikoCS {
 	class PingPacket : Packet {
 		
 		public long Identifier;
+
+		public byte[] data;
 		
-		private MemoryStream packetcontent;
+		private MemoryStream PacketContent;
 		
-		public PingPacket(byte[] data){
-			data = EncapsulationHelper.Decode(data).GetData();
-			packetcontent = new MemoryStream(data);
-			byte[] Identifierb = new byte[8];
-			packetcontent.Read(Identifierb, 0, 8);
-			Identifier = BitConverter.ToInt64(Identifierb, 0);
-		}
+		public PingPacket(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_CLIENT_CONNECT_PACKET;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			return null;
 		}
-		
+
+		public byte[] Decode(){
+			data = EncapsulationHelper.Decode(data).GetData();
+			PacketContent = BinaryHelper.Reset(PacketContent, data);
+			Identifier = BinaryHelper.ReadLong(PacketContent);
+			return PacketContent.ToArray();
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 	}
 }

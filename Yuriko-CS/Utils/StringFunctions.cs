@@ -51,7 +51,6 @@ namespace YurikoCS {
 				str += (char) data[index + 2 + size];
 				size++;
 			}
-			return str;
 		}
 	}
 }

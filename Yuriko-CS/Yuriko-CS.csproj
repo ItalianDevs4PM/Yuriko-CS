@@ -44,11 +44,9 @@
     <Compile Include="Utils\PropertiesConfig.cs" />
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\PacketID.cs" />
-    <Compile Include="Network\PacketListener.cs" />
     <Compile Include="Utils\Version.cs" />
     <Compile Include="Utils\TextFormat.cs" />
     <Compile Include="Network\Packets\UnconnectedPongPacket.cs" />
-    <Compile Include="Utils\PacketString.cs" />
     <Compile Include="Network\Packets\UnconnectedPingPacket.cs" />
     <Compile Include="Command\Command.cs" />
     <Compile Include="Player.cs" />
@@ -63,15 +61,22 @@
     <Compile Include="Command\DefaultCommands.cs" />
     <Compile Include="Permission\PermissionLevel.cs" />
     <Compile Include="Permission\DefaultPermissions.cs" />
-    <Compile Include="Network\EncapsulatedPacket.cs" />
     <Compile Include="Network\Packets\OpenConnectionRequest2Packet.cs" />
     <Compile Include="Network\Packets\OpenConnectionReply2Packet.cs" />
     <Compile Include="Network\Packets\ClientConnectPacket.cs" />
     <Compile Include="Math\Triad.cs" />
-    <Compile Include="Network\EncapsulationHelper.cs" />
+    <Compile Include="Utils\EncapsulationHelper.cs" />
     <Compile Include="Network\Packets\ServerHandshakePacket.cs" />
     <Compile Include="Network\Packets\ACK.cs" />
     <Compile Include="Network\Packets\NACK.cs" />
+    <Compile Include="Network\Packets\PingPacket.cs" />
+    <Compile Include="Network\Packets\PongPacket.cs" />
+    <Compile Include="Network\Packets\LoginPacket.cs" />
+    <Compile Include="Network\Packets\LoginStatusPacket.cs" />
+    <Compile Include="Network\Packets\SetTimePacket.cs" />
+    <Compile Include="Network\Packets\StartGamePacket.cs" />
+    <Compile Include="Utils\BinaryHelper.cs" />
+    <Compile Include="Network\PacketHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

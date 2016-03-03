@@ -30,44 +30,37 @@ using System.IO;
 namespace YurikoCS {
 	class OpenConnectionRequest2Packet : Packet {
 
-		public byte[] securitycookie = new byte[5];
+		public byte[] SecurityCookie = new byte[5];
 
 		public short ServerPort;
 
-		public short mtusize;
+		public short MtuSize;
 
 		public long ClientID;
+
+		public byte[] data;
 		
-		private MemoryStream packetcontent;
-		
-		public OpenConnectionRequest2Packet(byte[] data){
-			packetcontent = new MemoryStream(data);
-			packetcontent.Position = 17;
-			packetcontent.Read(securitycookie, 0, 5);
-			Array.Reverse(securitycookie, 0, securitycookie.Length);
-			packetcontent.Position = 22;
-			byte[] ServerPortb = new byte[2];
-			packetcontent.Read(ServerPortb, 0, 2);
-			Array.Reverse(ServerPortb, 0, ServerPortb.Length);
-			ServerPort = BitConverter.ToInt16(ServerPortb, 0);
-			packetcontent.Position = 24;
-			byte[] mtusizeb = new byte[2];
-			packetcontent.Read(mtusizeb, 0, 2);
-			//Array.Reverse(mtusizeb, 0, mtusizeb.Length);
-			mtusize = BitConverter.ToInt16(mtusizeb, 0);
-			packetcontent.Position = 26;
-			byte[] ClientIDb = new byte[8];
-			packetcontent.Read(ClientIDb, 0, 8);
-			Array.Reverse(ClientIDb, 0, ClientIDb.Length);
-			ClientID = BitConverter.ToInt64(ClientIDb, 0);
-		}
+		private MemoryStream PacketContent;
+
+		public OpenConnectionRequest2Packet(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_OPEN_CONNECTION_REQUEST_2;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			return null;
 		}
+		
+		public byte[] Decode(){
+			PacketContent = BinaryHelper.Reset(PacketContent, data);
+			SecurityCookie = BinaryHelper.ReadBytes(PacketContent, 5, 17);
+			ServerPort = BinaryHelper.ReadShort(PacketContent);
+			MtuSize = BinaryHelper.ReadShort(PacketContent);
+			ClientID = BinaryHelper.ReadLong(PacketContent);
+			return PacketContent.ToArray();
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 	}
 }

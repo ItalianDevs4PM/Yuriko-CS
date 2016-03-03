@@ -30,29 +30,30 @@ using System.IO;
 namespace YurikoCS {
 	class OpenConnectionReplyPacket : Packet {
 		
-		public short mtusize;
+		public short MtuSize;
 		
-		private MemoryStream packetcontent;
+		private MemoryStream PacketContent;
 		
-		public OpenConnectionReplyPacket(short mtusize){
-			this.mtusize = mtusize;
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			packetcontent.Write(Server.OFFLINE_MESSAGE_DATA_ID, 0, Server.OFFLINE_MESSAGE_DATA_ID.Length);
-			byte[] serverid = BitConverter.GetBytes((long) 0x00000000372cdc9e);
-			packetcontent.Write(serverid, 0, serverid.Length);
-			packetcontent.WriteByte(0); //Server security
-			byte[] mtusizeb = BitConverter.GetBytes(mtusize);
-			//Array.Reverse(mtusizeb, 0, mtusizeb.Length);
-			packetcontent.Write(mtusizeb, 0, mtusizeb.Length);
-		}
+		public OpenConnectionReplyPacket(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_OPEN_CONNECTION_REPLY;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteBytes(PacketContent, Server.OFFLINE_MESSAGE_DATA_ID);
+			BinaryHelper.WriteBytes(PacketContent, BitConverter.GetBytes((long) 0x00000000372cdc9e));
+			BinaryHelper.WriteByte(PacketContent, 0);	//Server security
+			BinaryHelper.WriteShort(PacketContent, MtuSize);
+			return PacketContent.ToArray();
 		}
+		
+		public byte[] Decode(){
+			return null;
+		}
+
+		public void SetPacketCount(Triad PacketCount){}
 	}
 }

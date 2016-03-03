@@ -31,26 +31,32 @@ namespace YurikoCS {
 	class SetTimePacket : Packet {
 		
 		public int Ticks;
+
+		public Triad PacketCount;
 		
-		private MemoryStream packetcontent;
+		private MemoryStream PacketContent;
 		
 		
-		public SetTimePacket(int Ticks, Triad packetCount){
-			packetcontent = new MemoryStream();
-			packetcontent.WriteByte(GetID());
-			this.Ticks = Ticks;
-			byte[] Ticksb = BitConverter.GetBytes(Ticks);
-			Array.Reverse(Ticksb, 0, 4);
-			packetcontent.Write(Ticksb, 0, 4);
-			packetcontent = new MemoryStream(EncapsulationHelper.Encode(packetcontent.ToArray(), 0x40, packetCount, 0x84).GetData());
-		}
+		public SetTimePacket(){}
 		
 		public byte GetID(){
 			return PacketID.MCPE_SET_TIME_PACKET;
 		}
 		
-		public byte[] GetContent(){
-			return packetcontent.ToArray();
+		public byte[] Encode(){
+			PacketContent = BinaryHelper.Reset(PacketContent);
+			BinaryHelper.WriteByte(PacketContent, GetID());
+			BinaryHelper.WriteInt(PacketContent, Ticks);
+			PacketContent = new MemoryStream(EncapsulationHelper.Encode(PacketContent.ToArray(), 0x40, PacketCount, 0x84).GetData());
+			return PacketContent.ToArray();
+		}
+
+		public byte[] Decode(){
+			return null;
+		}
+
+		public void SetPacketCount(Triad PacketCount){
+			this.PacketCount = PacketCount;
 		}
 		
 	}
