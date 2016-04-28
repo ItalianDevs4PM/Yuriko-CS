@@ -1,4 +1,5 @@
 /*
+/*
  *
  * _   __          _ _                ____ ____  
  *\ \ / /   _ _ __(_) | _____        / ___/ ___| 
@@ -10,11 +11,7 @@
  * server software in C#
  * Copyright 2016 ItalianDevs4PM.
  * 
- * Modifications and implementations of this software
- * which are made by ItalianDevs4PM or affiliates/contributors
- * are licensed under Creative Commons
- * Attribution-NonCommercial-NoDerivatives 4.0
- * International License.
+ * See LICENSE.md for the license applied to this file/project
  *
  *
  * @author ItalianDevs4PM
