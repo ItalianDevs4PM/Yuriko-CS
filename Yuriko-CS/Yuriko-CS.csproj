@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8E482A3C-083A-4149-ADB4-BF83B6982421}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>YurikoCS</RootNamespace>
     <AssemblyName>Yuriko-CS</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0</ReleaseVersion>
+    <UseMSBuildEngine>False</UseMSBuildEngine>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
@@ -77,6 +77,13 @@
     <Compile Include="Network\Packets\StartGamePacket.cs" />
     <Compile Include="Utils\BinaryHelper.cs" />
     <Compile Include="Network\PacketHandler.cs" />
+    <Compile Include="Command\Defaults\HelpCommand.cs">
+      <DeployService-Deploy>True</DeployService-Deploy>
+    </Compile>
+    <Compile Include="Command\Defaults\AboutCommand.cs">
+      <DeployService-Deploy>True</DeployService-Deploy>
+    </Compile>
+    <Compile Include="Command\Defaults\VersionCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

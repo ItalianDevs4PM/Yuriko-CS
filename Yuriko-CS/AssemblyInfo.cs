@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Yuriko-CS")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A server software for Minecraft: Pocket Edition")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("ItalianDevs4PM")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Utente")]
+[assembly: AssemblyCopyright("ItalianDevs4PM")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
