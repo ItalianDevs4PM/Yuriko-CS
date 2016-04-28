@@ -1,4 +1,4 @@
-/*
+﻿/*
  *
  * _   __          _ _                ____ ____  
  *\ \ / /   _ _ __(_) | _____        / ___/ ___| 
@@ -23,18 +23,13 @@ using System;
 using System.Collections.Generic;
 
 namespace YurikoCS {
-	public class ExitCommand : CommandExecutor {
+	public class HelpCommand : CommandExecutor {
 
-		public ExitCommand(){}
+		public HelpCommand(){}
 
 		public bool OnCommand(CommandSender sender, Command command, string[] args){
-			if(sender.HasPermission("yurikocs.command.exit")){
-				sender.SendMessage("Debug");
+			sender.SendMessage(TextFormat.translateColors('&',"&6HELP\n"));
 				return true;
-			}else{
-				sender.SendMessage("§cYou don't have permissions to execute this command");
-				return false;
-			}
 		}
 	}
 }
