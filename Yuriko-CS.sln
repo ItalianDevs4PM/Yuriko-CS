@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yuriko-CS", "Yuriko-CS\Yuriko-CS.csproj", "{8E482A3C-083A-4149-ADB4-BF83B6982421}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yuriko-CS", "Yuriko-CS.csproj", "{8E482A3C-083A-4149-ADB4-BF83B6982421}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,7 +15,6 @@ Global
 		{8E482A3C-083A-4149-ADB4-BF83B6982421}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Yuriko-CS\Yuriko-CS.csproj
-		version = 1.0
+		StartupItem = Yuriko-CS.csproj
 	EndGlobalSection
 EndGlobal

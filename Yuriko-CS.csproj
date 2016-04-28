@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8E482A3C-083A-4149-ADB4-BF83B6982421}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>YurikoCS</RootNamespace>
+    <AssemblyName>Yuriko-CS</AssemblyName>
+    <ReleaseVersion>1.0</ReleaseVersion>
+    <UseMSBuildEngine>False</UseMSBuildEngine>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>True</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>True</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\LogLevel.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Utils\Config.cs" />
+    <Compile Include="Utils\PropertiesConfig.cs" />
+    <Compile Include="Network\Packet.cs" />
+    <Compile Include="Network\PacketID.cs" />
+    <Compile Include="Utils\Version.cs" />
+    <Compile Include="Utils\TextFormat.cs" />
+    <Compile Include="Network\Packets\UnconnectedPongPacket.cs" />
+    <Compile Include="Network\Packets\UnconnectedPingPacket.cs" />
+    <Compile Include="Command\Command.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Permission\Permission.cs" />
+    <Compile Include="Command\CommandExecutor.cs" />
+    <Compile Include="YurikoCS.cs" />
+    <Compile Include="Network\Packets\OpenConnectionReplyPacket.cs" />
+    <Compile Include="Command\CommandSender.cs" />
+    <Compile Include="Command\ConsoleSender.cs" />
+    <Compile Include="Utils\StringFunctions.cs" />
+    <Compile Include="Command\Defaults\ExitCommand.cs" />
+    <Compile Include="Command\DefaultCommands.cs" />
+    <Compile Include="Permission\PermissionLevel.cs" />
+    <Compile Include="Permission\DefaultPermissions.cs" />
+    <Compile Include="Network\Packets\OpenConnectionRequest2Packet.cs" />
+    <Compile Include="Network\Packets\OpenConnectionReply2Packet.cs" />
+    <Compile Include="Network\Packets\ClientConnectPacket.cs" />
+    <Compile Include="Math\Triad.cs" />
+    <Compile Include="Utils\EncapsulationHelper.cs" />
+    <Compile Include="Network\Packets\ServerHandshakePacket.cs" />
+    <Compile Include="Network\Packets\ACK.cs" />
+    <Compile Include="Network\Packets\NACK.cs" />
+    <Compile Include="Network\Packets\PingPacket.cs" />
+    <Compile Include="Network\Packets\PongPacket.cs" />
+    <Compile Include="Network\Packets\LoginPacket.cs" />
+    <Compile Include="Network\Packets\LoginStatusPacket.cs" />
+    <Compile Include="Network\Packets\SetTimePacket.cs" />
+    <Compile Include="Network\Packets\StartGamePacket.cs" />
+    <Compile Include="Utils\BinaryHelper.cs" />
+    <Compile Include="Network\PacketHandler.cs" />
+    <Compile Include="Command\Defaults\HelpCommand.cs">
+      <DeployService-Deploy>True</DeployService-Deploy>
+    </Compile>
+    <Compile Include="Command\Defaults\AboutCommand.cs">
+      <DeployService-Deploy>True</DeployService-Deploy>
+    </Compile>
+    <Compile Include="Command\Defaults\VersionCommand.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
