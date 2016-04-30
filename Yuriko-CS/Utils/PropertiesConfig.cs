@@ -10,7 +10,11 @@
  * server software in C#
  * Copyright 2016 ItalianDevs4PM.
  * 
- * See LICENSE.md for the license applied to this file/project
+ * Modifications and implementations of this software
+ * which are made by ItalianDevs4PM or affiliates/contributors
+ * are licensed under Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0
+ * International License.
  *
  *
  * @author ItalianDevs4PM
@@ -37,7 +41,7 @@ namespace YurikoCS {
 			load(filename);
 		}
 
-		public void reload(){
+		public void Reload(){
 			load(fname);
 		}
 
@@ -63,11 +67,11 @@ namespace YurikoCS {
 			}
 		}
 		
-		public void save(){
-			save(fname);
+		public void Save(){
+			Save(fname);
 		}
 		
-		public void save(string filename){
+		public void Save(string filename){
 			if(!File.Exists(filename)){
 				FileStream fs = File.Create(filename);
 				fs.Close();
@@ -91,85 +95,89 @@ namespace YurikoCS {
 			content.Clear();
 		}
 
-		public void unset(string key) {
+		public void Unset(string key) {
 			content.Remove(key);
 		}
 
-		public void set(string key, object value) {
-			content.Add(key, value);
+		public void Set(string key, object value) {
+			if(Exists(key)){
+				content[key] = value;
+			}else{
+				content.Add(key, value);
+			}
 		}
 
-		public bool exists(string key) {
+		public bool Exists(string key) {
 			return content.ContainsKey(key);
 		}
 
-		public object get(string key) {
+		public object Get(string key) {
 			return content[key];
 		}
 
-		public string getString(string key) {
+		public string GetString(string key) {
 			return content[key].ToString();
 		}
 		
-		public bool isString(string key) {
+		public bool IsString(string key) {
 			return content[key].GetType() == typeof(string);
 		}
 
-		public bool getBoolean(string key) {
+		public bool GetBoolean(string key) {
 			return Convert.ToBoolean(content[key].ToString());
 		}
 
-		public bool isBoolean(string key) {
+		public bool IsBoolean(string key) {
 			return content[key].GetType() == typeof(bool);
 		}
 
-		public short getShort(string key) {
+		public short GetShort(string key) {
 			short res;
 			short.TryParse(content[key].ToString(), out res);
 			return res;
 		}
 
-		public bool isShort(string key) {
+		public bool IsShort(string key) {
 			return content[key].GetType() == typeof(short);
 		}
 
-		public int getInt(string key) {
+		public int GetInt(string key) {
 			int res;
 			int.TryParse(content[key].ToString(), out res);
 			return res;
 		}
 
-		public bool isInt(string key) {
+		public bool IsInt(string key) {
 			return content[key].GetType() == typeof(int);
 		}
 
-		public long getLong(string key) {
+		public long GetLong(string key) {
 			long res;
 			long.TryParse(content[key].ToString(), out res);
 			return res;
 		}
 
-		public bool isLong(string key) {
+		public bool IsLong(string key) {
 			return content[key].GetType() == typeof(long);
 		}
 
-		public float getFloat(string key) {
+		public float GetFloat(string key) {
 			float res;
 			float.TryParse(content[key].ToString(), out res);
 			return res;
 		}
 
-		public bool isFloat(string key) {
+		public bool IsFloat(string key) {
 			return content[key].GetType() == typeof(float);
 		}
 
-		public double getDouble(string key) {
+		public double GetDouble(string key) {
 			double res;
 			double.TryParse(content[key].ToString(), out res);
 			return res;
 		}
 
-		public bool isDouble(string key) {
+		public bool IsDouble(string key) {
 			return content[key].GetType() == typeof(double);
 		}
 	}
