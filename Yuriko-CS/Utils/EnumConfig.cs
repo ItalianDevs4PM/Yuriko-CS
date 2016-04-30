@@ -15,8 +15,8 @@ namespace YurikoCS {
 			load(filename);
 		}
 
-		public void reload(){
-			load();
+		public void Reload(){
+			load(fname);
 		}
 
 		public void load(string filename){
