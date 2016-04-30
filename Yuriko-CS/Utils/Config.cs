@@ -10,7 +10,11 @@
  * server software in C#
  * Copyright 2016 ItalianDevs4PM.
  * 
- * See LICENSE.md for the license applied to this file/project
+ * Modifications and implementations of this software
+ * which are made by ItalianDevs4PM or affiliates/contributors
+ * are licensed under Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0
+ * International License.
  *
  *
  * @author ItalianDevs4PM
@@ -25,47 +29,47 @@ using System.Collections.Generic;
 namespace YurikoCS {
 	interface Config {
 
-		void save();
+		void Save();
 
-		void save(string filename);
+		void Save(string filename);
 
-		void reload();
+		void Reload();
 
-		void set(string key, Object value);
+		void Set(string key, Object value);
 		
-		void unset(string key);
+		void Unset(string key);
 		
-		bool exists(string key);
+		bool Exists(string key);
 		
-		object get(string key);
+		object Get(string key);
 		
-		string getString(string key);
+		string GetString(string key);
 		
-		bool isString(string key);
+		bool IsString(string key);
 		
-		bool getBoolean(string key);
+		bool GetBoolean(string key);
 		
-		bool isBoolean(string key);
+		bool IsBoolean(string key);
 		
-		short getShort(string key);
+		short GetShort(string key);
 		
-		bool isShort(string key);
+		bool IsShort(string key);
 		
-		int getInt(string key);
+		int GetInt(string key);
 		
-		bool isInt(string key);
+		bool IsInt(string key);
 		
-		long getLong(string key);
+		long GetLong(string key);
 		
-		bool isLong(string key);
+		bool IsLong(string key);
 		
-		float getFloat(string key);
+		float GetFloat(string key);
 		
-		bool isFloat(string key);
+		bool IsFloat(string key);
 		
-		double getDouble(string key);
+		double GetDouble(string key);
 		
-		bool isDouble(string key);
+		bool IsDouble(string key);
 
 	}
 }
