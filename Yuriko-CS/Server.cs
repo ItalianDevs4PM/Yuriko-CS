@@ -10,7 +10,11 @@
  * server software in C#
  * Copyright 2016 ItalianDevs4PM.
  * 
- * See LICENSE.md for the license applied to this file/project
+ * Modifications and implementations of this software
+ * which are made by ItalianDevs4PM or affiliates/contributors
+ * are licensed under Creative Commons
+ * Attribution-NonCommercial-NoDerivatives 4.0
+ * International License.
  *
  *
  * @author ItalianDevs4PM
@@ -21,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -43,6 +48,8 @@ namespace YurikoCS {
 
 		public Server(){
 			if(Instance == null){
+				Stopwatch counter = new Stopwatch();
+				counter.Start();
 				Instance = this;
 				new Logger();
 				String cwd = Directory.GetCurrentDirectory();
@@ -66,69 +73,69 @@ namespace YurikoCS {
 					Directory.CreateDirectory(cwd + "/worlds");
 				}
 				Config serverprop = new PropertiesConfig("server.properties");
-				if(!serverprop.exists("server-name")){
-					serverprop.set("server-name", "Yuriko-CS Server");
+				if(!serverprop.Exists("server-name")){
+					serverprop.Set("server-name", "Yuriko-CS Server");
 				}
-				if(!serverprop.exists("server-port")){
-					serverprop.set("server-port", 19132);
+				if(!serverprop.Exists("server-port")){
+					serverprop.Set("server-port", 19132);
 				}
-				if(!serverprop.exists("gamemode")){
-					serverprop.set("gamemode", 1);
+				if(!serverprop.Exists("gamemode")){
+					serverprop.Set("gamemode", 1);
 				}
-				if(!serverprop.exists("max-players")){
-					serverprop.set("max-players", 20);
+				if(!serverprop.Exists("max-players")){
+					serverprop.Set("max-players", 20);
 				}
-				MaxPlayers = serverprop.getInt("max-players");
-				if(!serverprop.exists("motd")){
-					serverprop.set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
+				MaxPlayers = serverprop.GetInt("max-players");
+				if(!serverprop.Exists("motd")){
+					serverprop.Set("motd", "§aYuriko-CS§f Minecraft: Pocket Edition Server");
 				}
-				Motd = serverprop.getString("motd");
-				if(!serverprop.exists("spawn-protection")){
-					serverprop.set("spawn-protection", 10);
+				Motd = serverprop.GetString("motd");
+				if(!serverprop.Exists("spawn-protection")){
+					serverprop.Set("spawn-protection", 10);
 				}
-				if(!serverprop.exists("whitelist")){
-					serverprop.set("whitelist", false);
+				if(!serverprop.Exists("whitelist")){
+					serverprop.Set("whitelist", false);
 				}
-				if(!serverprop.exists("enable-autosave")){
-					serverprop.set("enable-autosave", true);
+				if(!serverprop.Exists("enable-autosave")){
+					serverprop.Set("enable-autosave", true);
 				}
-				if(!serverprop.exists("gamemode")){
-					serverprop.set("gamemode", 0);
+				if(!serverprop.Exists("gamemode")){
+					serverprop.Set("gamemode", 0);
 				}
-				if(!serverprop.exists("force-gamemode")){
-					serverprop.set("force-gamemode", false);
+				if(!serverprop.Exists("force-gamemode")){
+					serverprop.Set("force-gamemode", false);
 				}
-				if(!serverprop.exists("enable-pvp")){
-					serverprop.set("enable-pvp", true);
+				if(!serverprop.Exists("enable-pvp")){
+					serverprop.Set("enable-pvp", true);
 				}
-				if(!serverprop.exists("difficulty")){
-					serverprop.set("difficulty", 2);
+				if(!serverprop.Exists("difficulty")){
+					serverprop.Set("difficulty", 2);
 				}
-				if(!serverprop.exists("world-name")){
-					serverprop.set("world-name", "world");
+				if(!serverprop.Exists("world-name")){
+					serverprop.Set("world-name", "world");
 				}
-				if(!serverprop.exists("world-generator")){
-					serverprop.set("world-generator", "NORMAL");
+				if(!serverprop.Exists("world-generator")){
+					serverprop.Set("world-generator", "NORMAL");
 				}
 				//if(!serverprop.exists("world-seed")){
 				//	serverprop.set("world-seed", "");
 				//}
-				if(!serverprop.exists("announce-achievements")){
-					serverprop.set("announce-achievements", true);
+				if(!serverprop.Exists("announce-achievements")){
+					serverprop.Set("announce-achievements", true);
 				}
-				if(!serverprop.exists("enable-query")){
-					serverprop.set("enable-query", true);
+				if(!serverprop.Exists("enable-query")){
+					serverprop.Set("enable-query", true);
 				}
-				if(!serverprop.exists("enable-rcon")){
-					serverprop.set("enable-rcon", false);
+				if(!serverprop.Exists("enable-rcon")){
+					serverprop.Set("enable-rcon", false);
 				}
-				if(!serverprop.exists("rcon-port")){
-					serverprop.set("rcon-port", 18345);
+				if(!serverprop.Exists("rcon-port")){
+					serverprop.Set("rcon-port", 18345);
 				}
-				if(!serverprop.exists("rcon-password")){
-					serverprop.set("rcon-password", "random");
+				if(!serverprop.Exists("rcon-password")){
+					serverprop.Set("rcon-password", "random");
 				}
-				serverprop.save("server.properties");
+				serverprop.Save("server.properties");
 				Cfg = serverprop;
 				ConsSender = new ConsoleSender();
 				DefaultPermissions.RestoreDefaultPermissions();
@@ -139,6 +146,8 @@ namespace YurikoCS {
 				pk.Start();
 				Thread UDPServerSenderThread = new Thread(new ThreadStart(pk.StartSendThread));
 				UDPServerSenderThread.Start();
+				counter.Stop();
+				Logger.GetLogger().Info("Load completed in " + (counter.ElapsedMilliseconds / 60f).ToString("0.000") + "s! Type §2\"help\"§f for help");
 				waitConsoleInput();
 			}else{
 				Logger.GetLogger().Critical("Server already initialized!");
@@ -157,7 +166,7 @@ namespace YurikoCS {
 		}
 
 		public int GetPort(){
-			return Cfg.getInt("server-port");
+			return Cfg.GetInt("server-port");
 		}
 
 		public int GetMaxPlayers(){
